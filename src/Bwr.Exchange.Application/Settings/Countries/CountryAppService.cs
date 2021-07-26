@@ -26,10 +26,18 @@ namespace Bwr.Exchange.Settings.Countries
 
             return ObjectMapper.Map<List<CountryDto>>(countries);
         }
-        [HttpPost]
-        public async Task<ReadGrudDto> GetForGrid([FromBody] DataManagerRequest dm)
+
+        public IList<CountryDto> GetAllWithDetail()
         {
-            var data = await _countryManager.GetAllAsync();
+            var countries = _countryManager.GetAllWithDetail();
+
+            return ObjectMapper.Map<List<CountryDto>>(countries);
+        }
+
+        [HttpPost]
+        public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
+        {
+            var data = _countryManager.GetAll();
             IEnumerable<ReadCountryDto> countries = ObjectMapper.Map<List<ReadCountryDto>>(data);
 
             var operations = new DataOperations();

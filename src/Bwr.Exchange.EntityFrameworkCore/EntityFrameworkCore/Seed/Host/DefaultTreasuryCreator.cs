@@ -25,7 +25,8 @@ namespace Bwr.Exchange.EntityFrameworkCore.Seed.Host
             var treasuryExist = _context.Treasuries.Any();
             if (!treasuryExist)
             {
-                var treasury = new Treasury("الصندوق الرئيسي");
+                var treasury = new Treasury();
+                treasury.Name = "الصندوق الرئيسي";
                 _context.Treasuries.Add(treasury);
                 _context.SaveChanges();
             }

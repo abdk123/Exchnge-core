@@ -18,5 +18,6 @@
         public const string YouCanNotAddTheSameStatusForTwoCode = "YouCanNotAddTheSameStatusForTwoCode";
         public const string ThereIsAnotherMeetingAtTheSameTime = "ThereIsAnotherMeetingAtTheSameTime";
         public const string ThereIsAnotherCallAtTheSameTime = "ThereIsAnotherCallAtTheSameTime";
+        public const string CommusionAleadyExistForThisCurrency = "CommusionAleadyExistForThisCurrency";
     }
 }

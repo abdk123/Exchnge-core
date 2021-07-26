@@ -22,6 +22,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Folder Include="CashFlows\ClientCashFlows\Services\" />
     <Folder Include="Settings\Companies\" />
   </ItemGroup>
 </Project>

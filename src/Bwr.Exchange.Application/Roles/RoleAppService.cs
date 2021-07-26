@@ -12,12 +12,15 @@ using Bwr.Exchange.Authorization;
 using Bwr.Exchange.Authorization.Roles;
 using Bwr.Exchange.Authorization.Users;
 using Bwr.Exchange.Roles.Dto;
+using Bwr.Exchange.Shared.Dto;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.EJ2.Base;
 
 namespace Bwr.Exchange.Roles
 {
-    [AbpAuthorize(PermissionNames.Pages_Roles)]
+    //[AbpAuthorize(PermissionNames.Pages_Roles)]
     public class RoleAppService : AsyncCrudAppService<Role, RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>, IRoleAppService
     {
         private readonly RoleManager _roleManager;
@@ -102,10 +105,9 @@ namespace Bwr.Exchange.Roles
             var permissions = PermissionManager.GetAllPermissions();
 
             return Task.FromResult(new ListResultDto<PermissionDto>(
-                ObjectMapper.Map<List<PermissionDto>>(permissions).OrderBy(p => p.DisplayName).ToList()
+                ObjectMapper.Map<List<PermissionDto>>(permissions).ToList()
             ));
         }
-
         protected override IQueryable<Role> CreateFilteredQuery(PagedRoleResultRequestDto input)
         {
             return Repository.GetAllIncluding(x => x.Permissions)
@@ -143,6 +145,48 @@ namespace Bwr.Exchange.Roles
                 GrantedPermissionNames = grantedPermissions.Select(p => p.Name).ToList()
             };
         }
+
+        [HttpPost]
+        public async Task<ReadGrudDto> GetForGrid([FromBody] DataManagerRequest dm)
+        {
+            var data = await this.Repository.GetAllListAsync();
+            IEnumerable<ReadRoleDto> users = ObjectMapper.Map<List<ReadRoleDto>>(data);
+
+            var operations = new DataOperations();
+            if (dm.Where != null && dm.Where.Count > 0)
+            {
+                users = operations.PerformFiltering(users, dm.Where, "and");
+            }
+
+            if (dm.Sorted != null && dm.Sorted.Count > 0)
+            {
+                users = operations.PerformSorting(users, dm.Sorted);
+            }
+
+            var count = users.Count();
+
+            if (dm.Skip != 0)
+            {
+                users = operations.PerformSkip(users, dm.Skip);
+            }
+
+            if (dm.Take != 0)
+            {
+                users = operations.PerformTake(users, dm.Take);
+            }
+
+            return new ReadGrudDto() { result = users, count = count };
+        }
+
+        public IList<FlatPermissionDto> GetPermissions()
+        {
+            var permissions = PermissionManager.GetAllPermissions().ToList();
+
+            return ObjectMapper.Map<List<FlatPermissionDto>>(permissions);
+        }
+
+
     }
 }
+
 

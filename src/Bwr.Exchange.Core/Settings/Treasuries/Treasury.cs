@@ -5,9 +5,8 @@ namespace Bwr.Exchange.Settings.Treasuries
 {
     public class Treasury : FullAuditedEntity
     {
-        public Treasury(string name)
+        public Treasury()
         {
-            Name = name;
             TreasuryBalances = new List<TreasuryBalance>();
         }
         public string Name { get; set; }

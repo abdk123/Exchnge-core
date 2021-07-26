@@ -12,7 +12,7 @@ namespace Bwr.Exchange.Shared.Interfaces
         where IUpdateDto : class
     {
         Task<IList<IReadDto>> GetAllAsync();
-        Task<ReadGrudDto> GetForGrid([FromBody] DataManagerRequest dm);
+        ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm);
         IUpdateDto GetForEdit(int id);
         Task<IReadDto> CreateAsync(ICreateDto input);
         Task<IReadDto> UpdateAsync(IUpdateDto input);

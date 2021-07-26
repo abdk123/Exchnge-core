@@ -18,13 +18,16 @@ using Bwr.Exchange.Authorization.Accounts;
 using Bwr.Exchange.Authorization.Roles;
 using Bwr.Exchange.Authorization.Users;
 using Bwr.Exchange.Roles.Dto;
+using Bwr.Exchange.Shared.Dto;
 using Bwr.Exchange.Users.Dto;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.EJ2.Base;
 
 namespace Bwr.Exchange.Users
 {
-    [AbpAuthorize(PermissionNames.Pages_Users)]
+    //[AbpAuthorize(PermissionNames.Pages_Users)]
     public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
     {
         private readonly UserManager _userManager;
@@ -222,6 +225,44 @@ namespace Bwr.Exchange.Users
 
             return true;
         }
+
+        [HttpPost]
+        public async Task<ReadGrudDto> GetForGrid([FromBody] DataManagerRequest dm)
+        {
+            var data = await this.Repository.GetAllListAsync();
+            IEnumerable<ReadUserDto> users = ObjectMapper.Map<List<ReadUserDto>>(data);
+
+            var operations = new DataOperations();
+            if (dm.Where != null && dm.Where.Count > 0)
+            {
+                users = operations.PerformFiltering(users, dm.Where, "and");
+            }
+
+            if (dm.Sorted != null && dm.Sorted.Count > 0)
+            {
+                users = operations.PerformSorting(users, dm.Sorted);
+            }
+
+            var count = users.Count();
+
+            if (dm.Skip != 0)
+            {
+                users = operations.PerformSkip(users, dm.Skip);
+            }
+
+            if (dm.Take != 0)
+            {
+                users = operations.PerformTake(users, dm.Take);
+            }
+
+            return new ReadGrudDto() { result = users, count = count };
+        }
+
+        public async Task<IList<UserForDropdownDto>> GetUsersForDropdown()
+        {
+            var users = await this.Repository.GetAllListAsync();
+            return ObjectMapper.Map<List<UserForDropdownDto>>(users);
+        }
+
     }
 }
-

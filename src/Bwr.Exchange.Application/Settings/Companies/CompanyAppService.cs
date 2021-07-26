@@ -27,9 +27,9 @@ namespace Bwr.Exchange.Settings.Companies
             return ObjectMapper.Map<List<CompanyDto>>(companies);
         }
         [HttpPost]
-        public async Task<ReadGrudDto> GetForGrid([FromBody] DataManagerRequest dm)
+        public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
         {
-            var data = await _companyManager.GetAllAsync();
+            var data = _companyManager.GetAll();
             IEnumerable<ReadCompanyDto> companies = ObjectMapper.Map<List<ReadCompanyDto>>(data);
 
             var operations = new DataOperations();

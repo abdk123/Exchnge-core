@@ -1,4 +1,7 @@
 ﻿using Abp.Domain.Repositories;
+using Abp.Domain.Uow;
+using Abp.Events.Bus;
+using Bwr.Exchange.Settings.Currencies.Events;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +11,15 @@ namespace Bwr.Exchange.Settings.Currencies.Services
     public class CurrencyManager : ICurrencyManager
     {
         private readonly IRepository<Currency> _currencyRepository;
-        public CurrencyManager(IRepository<Currency> currencyRepository)
+        private readonly IUnitOfWorkManager _unitOfWorkManager;
+        public IEventBus EventBus { get; set; }
+        public CurrencyManager(
+            IRepository<Currency> currencyRepository,
+            IUnitOfWorkManager unitOfWorkManager)
         {
             _currencyRepository = currencyRepository;
+            _unitOfWorkManager = unitOfWorkManager;
+            EventBus = NullEventBus.Instance;
         }
 
         public bool CheckIfNameAlreadyExist(string name)
@@ -49,7 +58,15 @@ namespace Bwr.Exchange.Settings.Currencies.Services
 
         public async Task<Currency> InsertAndGetAsync(Currency currency)
         {
-            return await _currencyRepository.InsertAsync(currency);
+            int currencyId = 0;
+            using (var unitOfWork = _unitOfWorkManager.Begin())
+            {
+                currencyId = await _currencyRepository.InsertAndGetIdAsync(currency);
+                EventBus.Trigger(new CurrencyCreatedData { CurrencyId = currencyId });
+
+                unitOfWork.Complete();
+            }
+            return _currencyRepository.FirstOrDefault(currencyId);
         }
 
         public async Task<Currency> UpdateAndGetAsync(Currency currency)

@@ -4,9 +4,19 @@
     {
         public const string Pages_Tenants = "Pages.Tenants";
 
+        //Users
         public const string Pages_Users = "Pages.Users";
+        public const string Pages_Users_Create = "Pages.Users.Create";
+        public const string Pages_Users_Edit = "Pages.Users.Edit";
+        public const string Pages_Users_Delete = "Pages.Users.Delete";
+        public const string Pages_Users_ResetPassword = "Pages.Users.ResetPassword";
+        public const string Pages_Users_ChangePermissions = "Pages.Users.ChangePermissions";
 
+        //Roles
         public const string Pages_Roles = "Pages.Roles";
+        public const string Pages_Roles_Create = "Pages.Roles.Create";
+        public const string Pages_Roles_Edit = "Pages.Roles.Edit";
+        public const string Pages_Roles_Delete = "Pages.Roles.Delete";
 
         // Countries
         public const string Pages_Countries = "Pages.Countries";
@@ -49,5 +59,14 @@
         public const string Pages_Clients_Create = "Pages.Clients.Create";
         public const string Pages_Clients_Edit = "Pages.Clients.Edit";
         public const string Pages_Clients_Delete = "Pages.Clients.Delete";
+
+        // Initial Balance
+        public const string Pages_InitialBalance = "Pages.InitialBalance";
+
+        // Commisions
+        public const string Pages_Commisions = "Pages.Commisions";
+        public const string Pages_Commisions_Create = "Pages.Commisions.Create";
+        public const string Pages_Commisions_Edit = "Pages.Commisions.Edit";
+        public const string Pages_Commisions_Delete = "Pages.Commisions.Delete";
     }
 }

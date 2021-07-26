@@ -28,9 +28,9 @@ namespace Bwr.Exchange.Settings.Currencies
             return ObjectMapper.Map<List<CurrencyDto>>(countries);
         }
         [HttpPost]
-        public async Task<ReadGrudDto> GetForGrid([FromBody] DataManagerRequest dm)
+        public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
         {
-            var data = await _countryManager.GetAllAsync();
+            var data = _countryManager.GetAll();
             IEnumerable<ReadCurrencyDto> countries = ObjectMapper.Map<List<ReadCurrencyDto>>(data);
 
             var operations = new DataOperations();

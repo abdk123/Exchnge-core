@@ -27,9 +27,9 @@ namespace Bwr.Exchange.Settings.Clients
             return ObjectMapper.Map<List<ClientDto>>(countries);
         }
         [HttpPost]
-        public async Task<ReadGrudDto> GetForGrid([FromBody] DataManagerRequest dm)
+        public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
         {
-            var data = await _countryManager.GetAllAsync();
+            var data = _countryManager.GetAllWithDetail();
             IEnumerable<ReadClientDto> countries = ObjectMapper.Map<List<ReadClientDto>>(data);
 
             var operations = new DataOperations();

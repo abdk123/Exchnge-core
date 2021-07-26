@@ -28,9 +28,9 @@ namespace Bwr.Exchange.Settings.Expenses
             return ObjectMapper.Map<List<ExpenseDto>>(expenses);
         }
         [HttpPost]
-        public async Task<ReadGrudDto> GetForGrid([FromBody] DataManagerRequest dm)
+        public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
         {
-            var data = await _expenseManager.GetAllAsync();
+            var data = _expenseManager.GetAll();
             IEnumerable<ReadExpenseDto> expenses = ObjectMapper.Map<List<ReadExpenseDto>>(data);
 
             var operations = new DataOperations();

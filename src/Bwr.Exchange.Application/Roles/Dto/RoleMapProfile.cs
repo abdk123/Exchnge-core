@@ -14,6 +14,7 @@ namespace Bwr.Exchange.Roles.Dto
             CreateMap<Permission, string>().ConvertUsing(r => r.Name);
             CreateMap<RolePermissionSetting, string>().ConvertUsing(r => r.Name);
 
+            CreateMap<Role, ReadRoleDto>();
             CreateMap<CreateRoleDto, Role>();
 
             CreateMap<RoleDto, Role>();

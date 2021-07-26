@@ -8,6 +8,7 @@ namespace Bwr.Exchange.Settings.Currencies.Map
         public ExpenseMapProfile()
         {
             CreateMap<Currency, CurrencyDto>();
+            CreateMap<CurrencyDto, Currency>();
             CreateMap<Currency, ReadCurrencyDto>();
             CreateMap<Currency, CreateCurrencyDto>();
             CreateMap<CreateCurrencyDto, Currency>();

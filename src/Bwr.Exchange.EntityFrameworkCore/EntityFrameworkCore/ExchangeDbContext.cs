@@ -10,6 +10,7 @@ using Bwr.Exchange.Settings.Incomes;
 using Bwr.Exchange.Settings.Expenses;
 using Bwr.Exchange.Settings.Clients;
 using Bwr.Exchange.Settings.Companies;
+using Bwr.Exchange.Settings;
 
 namespace Bwr.Exchange.EntityFrameworkCore
 {
@@ -34,5 +35,6 @@ namespace Bwr.Exchange.EntityFrameworkCore
         public virtual DbSet<ClientBalance> ClientBalances { get; set; }
         public virtual DbSet<ClientPhone> ClientPhones { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Commision> Commisions { get; set; }
     }
 }

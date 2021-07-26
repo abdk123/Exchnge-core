@@ -56,7 +56,11 @@ namespace Bwr.Exchange.Settings.Clients.Services
 
         public IList<Client> GetAllWithDetail()
         {
-            var clients = _clientRepository.GetAllIncluding(x => x.ClientPhones);
+            var clients = _clientRepository.GetAllIncluding(
+                ph => ph.ClientPhones,
+                b => b.ClientBalances,
+                pr => pr.Province
+                );
             return clients.ToList();
         }
 
@@ -73,7 +77,24 @@ namespace Bwr.Exchange.Settings.Clients.Services
 
         public async Task<Client> InsertAndGetAsync(Client client)
         {
-            return await _clientRepository.InsertAsync(client);
+            int clientId = 0;
+            using (var unitOfWork = _unitOfWorkManager.Begin())
+            {
+                clientId = await _clientRepository.InsertAndGetIdAsync(client);
+
+                //Update client phones
+                var clientPhones = client.ClientPhones.ToList();//Don't remove ToList()
+                await RemoveClientPhones(clientId, clientPhones);
+                await AddNewClientPhones(clientId, clientPhones);
+
+                //Update client balances
+                var clientBalances = client.ClientBalances.ToList();//Don't remove ToList()
+                await RemoveClientBalances(clientId, clientBalances);
+                await AddNewClientBalances(clientId, clientBalances);
+
+                unitOfWork.Complete();
+            }
+            return await GetByIdAsync(clientId);
         }
 
         public async Task<Client> UpdateAndGetAsync(Client client)
@@ -84,13 +105,13 @@ namespace Bwr.Exchange.Settings.Clients.Services
 
                 //Update client phones
                 var clientPhones = client.ClientPhones.ToList();//Don't remove ToList()
-                await RemoveClientPhones(updatedClient, clientPhones);
-                await AddNewClientPhones(updatedClient, clientPhones);
+                await RemoveClientPhones(updatedClient.Id, clientPhones);
+                await AddNewClientPhones(updatedClient.Id, clientPhones);
 
                 //Update client balances
                 var clientBalances = client.ClientBalances.ToList();//Don't remove ToList()
-                await RemoveClientBalances(updatedClient, clientBalances);
-                await AddNewClientBalances(updatedClient, clientBalances);
+                await RemoveClientBalances(updatedClient.Id, clientBalances);
+                await AddNewClientBalances(updatedClient.Id, clientBalances);
 
                 unitOfWork.Complete();
             }
@@ -98,9 +119,9 @@ namespace Bwr.Exchange.Settings.Clients.Services
         }
 
         #region Helper Methods
-        private async Task RemoveClientPhones(Client client, IList<ClientPhone> newClientPhones)
+        private async Task RemoveClientPhones(int clientId, IList<ClientPhone> newClientPhones)
         {
-            var oldClientPhones = await _clientPhoneRepository.GetAllListAsync(x => x.ClientId == client.Id);
+            var oldClientPhones = await _clientPhoneRepository.GetAllListAsync(x => x.ClientId == clientId);
 
             foreach (var oldClientPhone in oldClientPhones)
             {
@@ -112,9 +133,9 @@ namespace Bwr.Exchange.Settings.Clients.Services
             }
         }
 
-        private async Task AddNewClientPhones(Client client, IList<ClientPhone> newClientPhones)
+        private async Task AddNewClientPhones(int clientId, IList<ClientPhone> newClientPhones)
         {
-            var oldClientPhones = await _clientPhoneRepository.GetAllListAsync(x => x.ClientId == client.Id);
+            var oldClientPhones = await _clientPhoneRepository.GetAllListAsync(x => x.ClientId == clientId);
             foreach (var newClientPhone in newClientPhones)
             {
                 var isExist = oldClientPhones.Any(x => x.PhoneNumber == newClientPhone.PhoneNumber.Trim());
@@ -124,9 +145,9 @@ namespace Bwr.Exchange.Settings.Clients.Services
                 }
             }
         }
-        private async Task RemoveClientBalances(Client client, IList<ClientBalance> newClientBalances)
+        private async Task RemoveClientBalances(int clientId, IList<ClientBalance> newClientBalances)
         {
-            var oldClientBalances = await _clientBalanceRepository.GetAllListAsync(x => x.ClientId == client.Id);
+            var oldClientBalances = await _clientBalanceRepository.GetAllListAsync(x => x.ClientId == clientId);
 
             foreach (var oldClientBalance in oldClientBalances)
             {
@@ -138,9 +159,9 @@ namespace Bwr.Exchange.Settings.Clients.Services
             }
         }
 
-        private async Task AddNewClientBalances(Client client, IList<ClientBalance> newClientBalances)
+        private async Task AddNewClientBalances(int clientId, IList<ClientBalance> newClientBalances)
         {
-            var oldClientBalances = await _clientBalanceRepository.GetAllListAsync(x => x.ClientId == client.Id);
+            var oldClientBalances = await _clientBalanceRepository.GetAllListAsync(x => x.ClientId == clientId);
             foreach (var newClientBalance in newClientBalances)
             {
                 var isExist = oldClientBalances.Any(x => x.CurrencyId == newClientBalance.CurrencyId);

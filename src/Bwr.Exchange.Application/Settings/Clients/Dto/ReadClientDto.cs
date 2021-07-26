@@ -1,12 +1,15 @@
-﻿namespace Bwr.Exchange.Settings.Clients.Dto
+﻿using Bwr.Exchange.Settings.Countries.Dto.Provinces;
+
+namespace Bwr.Exchange.Settings.Clients.Dto
 {
     public class ReadClientDto
     {
         public int id { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public bool Activated { get; set; }
-        public int ProvinceId { get; set; }
-       
+        public string name { get; set; }
+        public string address { get; set; }
+        public bool activated { get; set; }
+        public int provinceId { get; set; }
+        public ReadProvinceDto province { get; set; }
+
     }
 }

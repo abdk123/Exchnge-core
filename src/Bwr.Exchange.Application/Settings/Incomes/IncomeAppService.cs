@@ -28,9 +28,9 @@ namespace Bwr.Exchange.Settings.Incomes
             return ObjectMapper.Map<List<IncomeDto>>(incomes);
         }
         [HttpPost]
-        public async Task<ReadGrudDto> GetForGrid([FromBody] DataManagerRequest dm)
+        public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
         {
-            var data = await _incomeManager.GetAllAsync();
+            var data = _incomeManager.GetAll();
             IEnumerable<ReadIncomeDto> incomes = ObjectMapper.Map<List<ReadIncomeDto>>(data);
 
             var operations = new DataOperations();
