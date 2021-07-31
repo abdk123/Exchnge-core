@@ -4,14 +4,16 @@ using Bwr.Exchange.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bwr.Exchange.Migrations
 {
     [DbContext(typeof(ExchangeDbContext))]
-    partial class ExchangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210731135441_Create_Income_Transfer_Entity")]
+    partial class Create_Income_Transfer_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

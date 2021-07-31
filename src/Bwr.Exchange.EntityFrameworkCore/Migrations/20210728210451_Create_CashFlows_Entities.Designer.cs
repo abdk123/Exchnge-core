@@ -4,14 +4,16 @@ using Bwr.Exchange.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bwr.Exchange.Migrations
 {
     [DbContext(typeof(ExchangeDbContext))]
-    partial class ExchangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210728210451_Create_CashFlows_Entities")]
+    partial class Create_CashFlows_Entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2359,9 +2361,6 @@ namespace Bwr.Exchange.Migrations
                     b.Property<double>("Commission")
                         .HasColumnType("float");
 
-                    b.Property<double>("CompanyCommission")
-                        .HasColumnType("float");
-
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
 
@@ -2382,12 +2381,6 @@ namespace Bwr.Exchange.Migrations
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("FromClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FromCompanyId")
-                        .HasColumnType("int");
 
                     b.Property<string>("InstrumentNo")
                         .HasColumnType("nvarchar(max)");
@@ -2410,13 +2403,19 @@ namespace Bwr.Exchange.Migrations
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ReceivesdAmount")
+                    b.Property<double>("ReceivedAmount")
                         .HasColumnType("float");
+
+                    b.Property<int>("ReceivingCompanyId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("SenderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ToCompanyId")
+                    b.Property<int?>("SendingClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SendingCompanyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2427,13 +2426,13 @@ namespace Bwr.Exchange.Migrations
 
                     b.HasIndex("CurrencyId");
 
-                    b.HasIndex("FromClientId");
-
-                    b.HasIndex("FromCompanyId");
+                    b.HasIndex("ReceivingCompanyId");
 
                     b.HasIndex("SenderId");
 
-                    b.HasIndex("ToCompanyId");
+                    b.HasIndex("SendingClientId");
+
+                    b.HasIndex("SendingCompanyId");
 
                     b.ToTable("OutgoingTransfers");
                 });
@@ -2781,23 +2780,23 @@ namespace Bwr.Exchange.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bwr.Exchange.Settings.Clients.Client", "FromClient")
+                    b.HasOne("Bwr.Exchange.Settings.Companies.Company", "ReceivingCompany")
                         .WithMany()
-                        .HasForeignKey("FromClientId");
-
-                    b.HasOne("Bwr.Exchange.Settings.Companies.Company", "FromCompany")
-                        .WithMany()
-                        .HasForeignKey("FromCompanyId");
+                        .HasForeignKey("ReceivingCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Bwr.Exchange.Customers.Customer", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId");
 
-                    b.HasOne("Bwr.Exchange.Settings.Companies.Company", "ToCompany")
+                    b.HasOne("Bwr.Exchange.Settings.Clients.Client", "SendingClient")
                         .WithMany()
-                        .HasForeignKey("ToCompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SendingClientId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Companies.Company", "SendingCompany")
+                        .WithMany()
+                        .HasForeignKey("SendingCompanyId");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>

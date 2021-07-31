@@ -4,14 +4,16 @@ using Bwr.Exchange.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bwr.Exchange.Migrations
 {
     [DbContext(typeof(ExchangeDbContext))]
-    partial class ExchangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210731104707_Edit_Outgoing_Transfer_Entity")]
+    partial class Edit_Outgoing_Transfer_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2359,9 +2361,6 @@ namespace Bwr.Exchange.Migrations
                     b.Property<double>("Commission")
                         .HasColumnType("float");
 
-                    b.Property<double>("CompanyCommission")
-                        .HasColumnType("float");
-
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
 
@@ -2410,7 +2409,7 @@ namespace Bwr.Exchange.Migrations
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ReceivesdAmount")
+                    b.Property<double>("ReceivedAmount")
                         .HasColumnType("float");
 
                     b.Property<int?>("SenderId")

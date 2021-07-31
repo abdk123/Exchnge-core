@@ -11,6 +11,12 @@ using Bwr.Exchange.Settings.Expenses;
 using Bwr.Exchange.Settings.Clients;
 using Bwr.Exchange.Settings.Companies;
 using Bwr.Exchange.Settings;
+using Bwr.Exchange.Customers;
+using Bwr.Exchange.Transfers;
+using Bwr.Exchange.CashFlows.ClientCashFlows;
+using Bwr.Exchange.CashFlows.CompanyCashFlows;
+using Bwr.Exchange.CashFlows.TreasuryCashFlows;
+using System.Transactions;
 
 namespace Bwr.Exchange.EntityFrameworkCore
 {
@@ -36,5 +42,11 @@ namespace Bwr.Exchange.EntityFrameworkCore
         public virtual DbSet<ClientPhone> ClientPhones { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Commision> Commisions { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<OutgoingTransfer> OutgoingTransfers { get; set; }
+        public virtual DbSet<ClientCashFlow> ClientCashFlow { get; set; }
+        public virtual DbSet<CompanyCashFlow> CompanyCashFlow { get; set; }
+        public virtual DbSet<TreasuryCashFlow> TreasuryCashFlow { get; set; }
+        
     }
 }
