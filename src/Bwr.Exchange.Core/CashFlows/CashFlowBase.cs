@@ -13,6 +13,7 @@ namespace Bwr.Exchange.Shared
         public Bwr.Exchange.CashFlows.Transaction Transaction { get; set; }
         public bool Matched { get; set; }
         public bool? Shaded { get; set; }
+        public string Note { get; set; }
 
         #region User
         public long? UserId { get; set; }
