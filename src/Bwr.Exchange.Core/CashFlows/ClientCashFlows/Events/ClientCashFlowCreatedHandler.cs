@@ -17,13 +17,15 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows.Events
 
         public async Task HandleEventAsync(ClientCashFlowCreatedEventData eventData)
         {
-            var clientCashFlow = new ClientCashFlow(
-                eventData.Date, 
-                eventData.Amount, 
-                eventData.TransactionId, 
-                eventData.Type, 
-                eventData.Commission, 
-                eventData.ClientCommission);
+            var clientCashFlow = new ClientCashFlow()
+            {
+                Date = eventData.Date,
+                Amount = eventData.Amount,
+                Transaction = new Transaction(eventData.TransactionId, eventData.Type),
+                Commission = eventData.Commission,
+                ClientCommission = eventData.ClientCommission
+            };
+                
 
             await _clientCashFlowManager.Create(clientCashFlow);
         }

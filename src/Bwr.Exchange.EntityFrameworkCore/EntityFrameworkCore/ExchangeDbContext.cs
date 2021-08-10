@@ -27,8 +27,8 @@ namespace Bwr.Exchange.EntityFrameworkCore
         public ExchangeDbContext(DbContextOptions<ExchangeDbContext> options)
             : base(options)
         {
+            
         }
-
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<CompanyBalance> CompanyBalances { get; set; }
         public virtual DbSet<Province> Provinces { get; set; }
@@ -44,9 +44,9 @@ namespace Bwr.Exchange.EntityFrameworkCore
         public virtual DbSet<Commision> Commisions { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<OutgoingTransfer> OutgoingTransfers { get; set; }
-        public virtual DbSet<ClientCashFlow> ClientCashFlow { get; set; }
-        public virtual DbSet<CompanyCashFlow> CompanyCashFlow { get; set; }
-        public virtual DbSet<TreasuryCashFlow> TreasuryCashFlow { get; set; }
-        
+        public virtual DbSet<ClientCashFlow> ClientCashFlows { get; set; }
+        public virtual DbSet<CompanyCashFlow> CompanyCashFlows { get; set; }
+        public virtual DbSet<TreasuryCashFlow> TreasuryCashFlows { get; set; }
+
     }
 }

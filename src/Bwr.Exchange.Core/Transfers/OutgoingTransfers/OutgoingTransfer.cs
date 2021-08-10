@@ -38,7 +38,7 @@ namespace Bwr.Exchange.Transfers
 
         #endregion
 
-        public double ReceivesdAmount { get; set; }
+        public double ReceivedAmount { get; set; }
         public string InstrumentNo { get; set; } //رقم الصك
         public string Reason { get; set; }
         public string Note { get; set; }

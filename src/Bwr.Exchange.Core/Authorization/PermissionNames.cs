@@ -68,5 +68,11 @@
         public const string Pages_Commisions_Create = "Pages.Commisions.Create";
         public const string Pages_Commisions_Edit = "Pages.Commisions.Edit";
         public const string Pages_Commisions_Delete = "Pages.Commisions.Delete";
+
+        // OutgoingTransfers
+        public const string Pages_OutgoingTransfers = "Pages.OutgoingTransfers";
+        public const string Pages_OutgoingTransfers_Create = "Pages.OutgoingTransfers.Create";
+        public const string Pages_OutgoingTransfers_Edit = "Pages.OutgoingTransfers.Edit";
+
     }
 }

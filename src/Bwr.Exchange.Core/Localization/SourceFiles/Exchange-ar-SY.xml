@@ -155,6 +155,7 @@
     <text name="DeleteIncome">حذف ايراد</text>
     <text name="DoYouWantToRemoveTheIncome">هل تريد حذف الايراد؟</text>
 
+    <text name="Treasury">الصندوق</text>
     <text name="TreasuryBalance">رصيد الصندوق</text>
     <text name="TreasuryBalanceName">اسم الرصيد</text>
     <text name="TreasuryBalances">رصيد الصندوق</text>
@@ -171,7 +172,7 @@
     <text name="ClearFilters">مسح التصفية</text>
     <text name="ClearSorts">مسح الفرز</text>
     
-    <text name="Client">العمبل</text>
+    <text name="Client">العميل</text>
     <text name="ClientInfo">بيانات العميل</text>
     <text name="Clients">العملاء</text>
     <text name="ClientPhones">هواتف العميل</text>
@@ -213,7 +214,61 @@
     
     <text name="OnHim">عليه</text>
     <text name="ForHim">له</text>
+
+    <text name="ClientCashFlow">التدفق النقدي للعميل</text>
+    <text name="Commission">العمولة</text>
+    <text name="ClientCommission">عمولة العميل</text>
+    <text name="CompanyCommission">عمولة الشركة</text>
+    <text name="Date">التاريخ</text>
+    <text name="Amount">المبلغ</text>
+    <text name="CurrentBalance">الرصيد الحالي</text>
+    <text name="Transaction">عملية</text>
+    <text name="TransactionType">نوع العملية</text>
+    <text name="Matched">مطابق</text>
+    <text name="Matching">المطابقة</text>
+    <text name="Shaded">مضلل</text>
+    <text name="Shading">تظليل</text>
+    <text name="Note">ملاحظات</text>
+
+    <text name="OutgoingTransfer">الحوالة الصادرة</text>
+    <text name="CreateNewOutgoingTransfer">إضافة حوالة صادرة</text>
+    <text name="EditOutgoingTransfer">تعديل حوالة صادرة</text>
+    <text name="OutgoingTransfers">الحوالات الصادرة</text>
+    <text name="Transfers">الحوالات</text>
+    <text name="ToCompany">إلى شركة</text>
+    <text name="ToClient">إلى العميل</text>
+    <text name="ReceivedAmount">المبلغ الواصل</text>
+    <text name="RequiredAmount">المبلغ المطلوب</text>
+    <text name="InstrumentNo">رقم الصك</text>
+    <text name="Reason">السبب</text>
+    <text name="IncomeTransfer">حوالة واردة</text>
+    <text name="IncomeTransfers">الحوالات الواردة</text>
+    <text name="Receiver">المستلم</text>
+    <text name="Sender">المرسل</text>
+    <text name="SenderPhone">هاتف المرسل</text>
+    <text name="FromCompany">من الشركة</text>
+    <text name="FromClient">من العميل</text>
+    <text name="Statement">كشف</text>
+    <text name="Statements">الكشوف</text>
+    <text name="ClientBalanceStatement">كشف رصيد العميل</text>
+    <text name="MainInfo">المعلومات الأساسية</text>
+    <text name="FinancialInfo">المعلومات المالية</text>
+    <text name="AdditionalInfo">معلومات إضافية</text>
+    <text name="SelectDate">أختر تاريخ</text>
+    <text name="PreviousCompanyBalance">رصيد سابق للشركة</text>
+    <text name="PreviousBalance">رصيد سابق </text>
+    <text name="SenderAndReceiverInfo">معلومات المرسل والمستقبل</text>
+    <text name="SenderInfo">معلومات المرسل </text>
+    <text name="ReceiverInfo">معلومات المستقبل</text>
+    <text name="PaymentType">نوع الدفع</text>
+    <text name="Beneficiary">المستفيد</text>
+    <text name="BeneficiaryAddress">عنوان المستفيد</text>
+    <text name="BeneficiaryPhone">هاتف المستفيد</text>
+    <text name="MainAccount">الحساب الرئيسي</text>
+    <text name="ActionType">نوع الحركة</text>
+    <text name="ExchangeParty">جهة الصرف</text>
+    <text name="Issuer">جهة الإصدار</text>
+    <text name="IdentificationNumber">رقم الهوية</text>
   
-    
   </texts>
 </localizationDictionary>

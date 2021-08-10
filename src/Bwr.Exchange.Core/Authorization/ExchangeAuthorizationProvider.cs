@@ -72,6 +72,11 @@ namespace Bwr.Exchange.Authorization
             context.CreatePermission(PermissionNames.Pages_Commisions_Create, L("CreateNewCommision"));
             context.CreatePermission(PermissionNames.Pages_Commisions_Edit, L("EditCommision"));
             context.CreatePermission(PermissionNames.Pages_Commisions_Delete, L("DeleteCommision"));
+
+            //OutgoingTransfers
+            context.CreatePermission(PermissionNames.Pages_OutgoingTransfers, L("OutgoingTransfers"));
+            context.CreatePermission(PermissionNames.Pages_OutgoingTransfers_Create, L("CreateNewOutgoingTransfer"));
+            context.CreatePermission(PermissionNames.Pages_OutgoingTransfers_Edit, L("EditOutgoingTransfer"));
         }
 
         private static ILocalizableString L(string name)
