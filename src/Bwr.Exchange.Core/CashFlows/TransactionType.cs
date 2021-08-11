@@ -3,6 +3,7 @@
     public enum TransactionType
     {
         OutgoingTransfer,
-        IncomeTransfer
+        IncomeTransfer,
+        TreasuryAction
     }
 }

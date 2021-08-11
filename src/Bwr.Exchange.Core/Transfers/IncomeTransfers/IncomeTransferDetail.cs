@@ -1,12 +1,6 @@
-﻿using Abp.Domain.Entities.Auditing;
-using Bwr.Exchange.Customers;
-using Bwr.Exchange.Settings.Clients;
+﻿using Bwr.Exchange.Settings.Clients;
 using Bwr.Exchange.Settings.Companies;
-using Bwr.Exchange.Settings.Currencies;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Bwr.Exchange.Transfers.IncomeTransfers
 {

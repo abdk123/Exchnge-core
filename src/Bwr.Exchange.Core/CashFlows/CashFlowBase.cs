@@ -13,9 +13,10 @@ namespace Bwr.Exchange.Shared
         public Bwr.Exchange.CashFlows.Transaction Transaction { get; set; }
         public bool Matched { get; set; }
         public bool? Shaded { get; set; }
+        public string Type { get; set; }
         public string Note { get; set; }
 
-        #region User
+        #region User who do matching
         public long? UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

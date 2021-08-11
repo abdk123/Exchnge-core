@@ -1,8 +1,6 @@
 ﻿using Abp.Domain.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bwr.Exchange.Settings.Treasuries.Services
@@ -27,6 +25,11 @@ namespace Bwr.Exchange.Settings.Treasuries.Services
             return await _treasuryBalanceRepository.FirstOrDefaultAsync(id);
         }
 
+        public TreasuryBalance GetByTreasuryIdAndCurrency(int treasuryId, int currencyId)
+        {
+            return GetAllWithDetails().FirstOrDefault(x => x.TreasuryId == treasuryId && x.CurrencyId == currencyId);
+        }
+
         public async Task<TreasuryBalance> InsertAndGetAsync(TreasuryBalance treasuryBalance)
         {
             
@@ -38,7 +41,5 @@ namespace Bwr.Exchange.Settings.Treasuries.Services
         {
             return await _treasuryBalanceRepository.UpdateAsync(treasuryBalance);
         }
-
-        
     }
 }
