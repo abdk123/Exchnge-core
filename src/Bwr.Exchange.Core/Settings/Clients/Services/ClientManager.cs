@@ -118,6 +118,18 @@ namespace Bwr.Exchange.Settings.Clients.Services
             return await GetByIdAsync(client.Id);
         }
 
+        public ClientBalance GetClientBalance(int clientId, int currencyId)
+        {
+            ClientBalance clientBalance = null;
+            var client = GetAllWithDetail().FirstOrDefault(x => x.Id == clientId);
+            if (client != null)
+            {
+                clientBalance = client.ClientBalances.FirstOrDefault(x => x.CurrencyId == currencyId);
+            }
+
+            return clientBalance;
+        }
+
         #region Helper Methods
         private async Task RemoveClientPhones(int clientId, IList<ClientPhone> newClientPhones)
         {
@@ -171,6 +183,8 @@ namespace Bwr.Exchange.Settings.Clients.Services
                 }
             }
         }
+
+        
         #endregion
     }
 }

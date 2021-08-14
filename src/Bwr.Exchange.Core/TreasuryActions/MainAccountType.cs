@@ -5,11 +5,11 @@
         /// <summary>
         /// ذمم عملاء
         /// </summary>
-        Client,
+        ClientReceivables,
         /// <summary>
         /// ذمم شركات
         /// </summary>
-        Company,
+        CompanyReceivables,
         /// <summary>
         /// إيرادات عامة
         /// </summary>

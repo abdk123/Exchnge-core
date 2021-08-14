@@ -11,6 +11,7 @@ namespace Bwr.Exchange.Settings.Companies.Services
         Company GetByIdWithDetail(int id);
         Task<Company> GetByIdAsync(int id);
         IList<Company> GetAll();
+        CompanyBalance GetCompanyBalance(int companyId, int currencyId);
         Task<Company> InsertAndGetAsync(Company company);
         Task<Company> UpdateAndGetAsync(Company company);
         Task DeleteAsync(int id);

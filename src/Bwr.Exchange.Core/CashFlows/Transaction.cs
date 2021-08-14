@@ -1,28 +1,24 @@
 ﻿using Abp.Domain.Values;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bwr.Exchange.CashFlows
 {
-    [Owned]
     public class Transaction : ValueObject
     {
         public Transaction() { }
-        public Transaction(
-            int transactionId,
-            TransactionType type
-            )
+        public Transaction(int transactionId, TransactionType transactionType)
         {
             TransactionId = transactionId;
-            Type = type;
+            TransactionType = transactionType;
         }
-        public int TransactionId { get; }
-        public TransactionType Type { get; }
+        public int TransactionId { get; private set; }
+        public TransactionType TransactionType { get; private set; }
 
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return TransactionId;
-            yield return Type;
+            yield return TransactionType;
         }
     }
 }

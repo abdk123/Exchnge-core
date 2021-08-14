@@ -17,13 +17,21 @@ using Bwr.Exchange.CashFlows.ClientCashFlows;
 using Bwr.Exchange.CashFlows.CompanyCashFlows;
 using Bwr.Exchange.CashFlows.TreasuryCashFlows;
 using System.Transactions;
+using Bwr.Exchange.TreasuryActions;
 
 namespace Bwr.Exchange.EntityFrameworkCore
 {
     public class ExchangeDbContext : AbpZeroDbContext<Tenant, Role, User, ExchangeDbContext>
     {
         /* Define a DbSet for each entity of the application */
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CashFlows.Transaction>()
+                .HasKey(x => new { x.TransactionId, x.TransactionType });
+
+        }
         public ExchangeDbContext(DbContextOptions<ExchangeDbContext> options)
             : base(options)
         {
@@ -47,6 +55,7 @@ namespace Bwr.Exchange.EntityFrameworkCore
         public virtual DbSet<ClientCashFlow> ClientCashFlows { get; set; }
         public virtual DbSet<CompanyCashFlow> CompanyCashFlows { get; set; }
         public virtual DbSet<TreasuryCashFlow> TreasuryCashFlows { get; set; }
+        public virtual DbSet<TreasuryAction> TreasuryActions { get; set; }
 
     }
 }

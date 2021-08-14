@@ -4,10 +4,9 @@ using Bwr.Exchange.Settings.Companies.Dto;
 using Bwr.Exchange.Settings.Currencies.Dto;
 using Bwr.Exchange.Settings.Expenses.Dto;
 using Bwr.Exchange.Settings.Incomes.Dto;
+using Bwr.Exchange.Settings.Treasury.Dto;
 using Bwr.Exchange.Transfers.IncomeTransfers.Dto;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bwr.Exchange.TreasuryActions.Dto
 {
@@ -22,24 +21,24 @@ namespace Bwr.Exchange.TreasuryActions.Dto
         public CurrencyDto Currency { get; set; }
         #endregion
 
-        #region To Company 
-        public int? ToCompanyId { get; set; }
-        public CompanyDto ToCompany { get; set; }
+        #region Exchange Party Company 
+        public int? ExchangePartyCompanyId { get; set; }
+        public CompanyDto ExchangePartyCompany { get; set; }
         #endregion
 
-        #region To Client 
-        public int? ToClientId { get; set; }
-        public ClientDto ToClient { get; set; }
+        #region Exchange Party Client 
+        public int? ExchangePartyClientId { get; set; }
+        public ClientDto ExchangePartyClient { get; set; }
         #endregion
 
-        #region From Company 
-        public int? FromCompanyId { get; set; }
-        public CompanyDto FromCompany { get; set; }
+        #region Main Account Company 
+        public int? MainAccountCompanyId { get; set; }
+        public CompanyDto MainAccountCompany { get; set; }
         #endregion
 
-        #region From Client 
-        public int? FromClientId { get; set; }
-        public ClientDto FromClient { get; set; }
+        #region Main Account Client 
+        public int? MainAccountClientId { get; set; }
+        public ClientDto MainAccountClient { get; set; }
         #endregion
 
         #region Expense 
@@ -52,7 +51,12 @@ namespace Bwr.Exchange.TreasuryActions.Dto
         public IncomeDto Income { get; set; }
         #endregion
 
-        #region IncomeTransferDetail 
+        #region Treasury 
+        public int? TreasuryId { get; set; }
+        public TreasuryDto Treasury { get; set; }
+        #endregion
+
+        #region Income Transfer Detail 
         public int? IncomeTransferDetailId { get; set; }
         public IncomeTransferDetailDto IncomeTransferDetail { get; set; }
         #endregion

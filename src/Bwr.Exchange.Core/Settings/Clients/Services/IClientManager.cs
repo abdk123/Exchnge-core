@@ -11,6 +11,7 @@ namespace Bwr.Exchange.Settings.Clients.Services
         Client GetByIdWithDetail(int id);
         Task<Client> GetByIdAsync(int id);
         IList<Client> GetAll();
+        ClientBalance GetClientBalance(int clientId, int currencyId);
         Task<Client> InsertAndGetAsync(Client country);
         Task<Client> UpdateAndGetAsync(Client country);
         Task DeleteAsync(int id);

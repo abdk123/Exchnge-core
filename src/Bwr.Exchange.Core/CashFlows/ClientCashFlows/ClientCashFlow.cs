@@ -1,25 +1,18 @@
-﻿using Bwr.Exchange.Shared;
+﻿using Bwr.Exchange.Settings.Clients;
+using Bwr.Exchange.Shared;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bwr.Exchange.CashFlows.ClientCashFlows
 {
     public class ClientCashFlow : CashFlowBase
     {
-        //public ClientCashFlow(
-        //    DateTime date,
-        //    double amount,
-        //    int transactionId,
-        //    TransactionType type,
-        //    double commission,
-        //    double clientCommission
-        //    )
-        //{
-        //    Date = date;
-        //    Amount = amount;
-        //    Transaction = new Transaction(transactionId, type);
-        //    Commission = commission;
-        //    ClientCommission = clientCommission;
-        //}
+        #region Client 
+        public int ClientId { get; set; }
+        [ForeignKey("ClientId")]
+        public virtual Client Client { get; set; }
+        #endregion
+        
         public double Commission { get; set; }
         public double ClientCommission { get; set; }
     }

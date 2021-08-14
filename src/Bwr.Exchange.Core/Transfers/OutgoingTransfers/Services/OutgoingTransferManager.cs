@@ -39,7 +39,7 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
                     ClientCommission = input.ClientCommission,
                     Date = input.Date,
                     TransactionId = outgoingTransferId,
-                    Type = TransactionType.OutgoingTransfer
+                    TransactionType = TransactionType.OutgoingTransfer
                 });
             }
 

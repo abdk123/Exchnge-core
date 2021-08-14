@@ -1,23 +1,20 @@
 ﻿using Abp.Domain.Repositories;
-using Abp.Domain.Services;
 using Abp.Domain.Uow;
 using Abp.Events.Bus;
 using Bwr.Exchange.CashFlows.TreasuryCashFlows.Events;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bwr.Exchange.TreasuryActions.Services.Implement
 {
-    public class ExpenseFromTreasuryDomainService : ITreasuryActionDomainService
+    public class ReceiptMainAccountIncomesExchangePartyTreasuryDomainService : ITreasuryActionDomainService
     {
         private readonly IRepository<TreasuryAction> _treasuryActionRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
-        private IEventBus EventBus { get; set; }
         public TreasuryAction TreasuryAction { get; set; }
 
-        public ExpenseFromTreasuryDomainService(
+        public ReceiptMainAccountIncomesExchangePartyTreasuryDomainService(
             IRepository<TreasuryAction> treasuryActionRepository,
             IUnitOfWorkManager unitOfWorkManager,
             TreasuryAction treasuryAction
@@ -35,22 +32,30 @@ namespace Bwr.Exchange.TreasuryActions.Services.Implement
             {
                 TreasuryAction.Date = DateTime.Now;
                 treasuryActionId = await _treasuryActionRepository.InsertAndGetIdAsync(TreasuryAction);
-                EventBus.Trigger(
+
+                TreasuryAction = GetByIdWithDetail(treasuryActionId);
+
+                EventBus.Default.Trigger(
                     new TreasuryCashFlowCreatedEventData(
                         TreasuryAction.Date,
                         TreasuryAction.CurrencyId,
                         TreasuryAction.TreasuryId,
                         treasuryActionId,
                         CashFlows.TransactionType.TreasuryAction,
-                        TreasuryAction.Amount,
-                        TransactionConst.GeneralExpenses,
-                        TreasuryAction.Expense.Name,
+                        (TreasuryAction.Amount),
+                        TransactionConst.GeneralIncomes,
+                        TreasuryAction.Income.Name,
                         string.Empty
                         ));
 
                 unitOfWork.Complete();
             }
-            return _treasuryActionRepository.FirstOrDefault(treasuryActionId);
+            return TreasuryAction;
+        }
+
+        private TreasuryAction GetByIdWithDetail(int id)
+        {
+            return _treasuryActionRepository.GetAllIncluding(ex => ex.Income).FirstOrDefault(x => x.Id == id);
         }
     }
 }

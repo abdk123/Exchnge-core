@@ -23,31 +23,31 @@ namespace Bwr.Exchange.TreasuryActions
         #region Currency 
         public int? CurrencyId { get; set; }
         [ForeignKey("CurrencyId")]
-        public virtual Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; } 
         #endregion
 
-        #region To Company 
-        public int? ToCompanyId { get; set; }
-        [ForeignKey("ToCompanyId")]
-        public virtual Company ToCompany { get; set; }
+        #region Exchange Party Company 
+        public int? ExchangePartyCompanyId { get; set; }
+        [ForeignKey("ExchangePartyCompanyId")]
+        public virtual Company ExchangePartyCompany { get; set; }
         #endregion
 
-        #region To Client 
-        public int? ToClientId { get; set; }
-        [ForeignKey("ToClientId")]
-        public virtual Client ToClient { get; set; }
+        #region Exchange Party Client 
+        public int? ExchangePartyClientId { get; set; }
+        [ForeignKey("ExchangePartyClientId")]
+        public virtual Client ExchangePartyClient { get; set; }
         #endregion
 
-        #region From Company 
-        public int? FromCompanyId { get; set; }
-        [ForeignKey("FromCompanyId")]
-        public virtual Company FromCompany { get; set; }
+        #region Main Account Company 
+        public int? MainAccountCompanyId { get; set; }
+        [ForeignKey("MainAccountCompanyId")]
+        public virtual Company MainAccountCompany { get; set; }
         #endregion
 
-        #region From Client 
-        public int? FromClientId { get; set; }
-        [ForeignKey("FromClientId")]
-        public virtual Client FromClient { get; set; }
+        #region Main Account Client 
+        public int? MainAccountClientId { get; set; }
+        [ForeignKey("MainAccountClientId")]
+        public virtual Client MainAccountClient { get; set; }
         #endregion
 
         #region Treasury 
@@ -68,7 +68,7 @@ namespace Bwr.Exchange.TreasuryActions
         public virtual Income Income { get; set; }
         #endregion
 
-        #region IncomeTransferDetail 
+        #region Income Transfer Detail 
         public int? IncomeTransferDetailId { get; set; }
         [ForeignKey("IncomeTransferDetailId")]
         public virtual IncomeTransferDetail IncomeTransferDetail { get; set; }

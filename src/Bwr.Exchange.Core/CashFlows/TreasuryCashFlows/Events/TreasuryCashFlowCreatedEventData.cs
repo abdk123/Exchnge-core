@@ -7,6 +7,7 @@ namespace Bwr.Exchange.CashFlows.TreasuryCashFlows.Events
 {
     public class TreasuryCashFlowCreatedEventData : EventData
     {
+        public TreasuryCashFlowCreatedEventData() { }
         public TreasuryCashFlowCreatedEventData(
             DateTime date, 
             int? currencyId, 
@@ -16,7 +17,7 @@ namespace Bwr.Exchange.CashFlows.TreasuryCashFlows.Events
             double amount, 
             string type, 
             string name,
-            string note
+            string note = ""
             )
         {
             Date = date;
@@ -38,6 +39,7 @@ namespace Bwr.Exchange.CashFlows.TreasuryCashFlows.Events
         public double Amount { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
+        public string InstrumentNo { get; set; }
         public string Note { get; set; }
     }
 }

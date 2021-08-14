@@ -100,6 +100,18 @@ namespace Bwr.Exchange.Settings.Companies.Services
             return await GetByIdAsync(company.Id);
         }
 
+        public CompanyBalance GetCompanyBalance(int companyId, int currencyId)
+        {
+            CompanyBalance clientBalance = null;
+            var client = GetAllWithDetail().FirstOrDefault(x => x.Id == companyId);
+            if (client != null)
+            {
+                clientBalance = client.CompanyBalances.FirstOrDefault(x => x.CurrencyId == currencyId);
+            }
+
+            return clientBalance;
+        }
+
         #region Helper Methods
         private async Task RemoveCompanyBalances(int companyId, IList<CompanyBalance> newCompanyBalances)
         {

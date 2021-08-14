@@ -1,7 +1,6 @@
 ﻿using Abp.Domain.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bwr.Exchange.CashFlows.TreasuryCashFlows.Services
@@ -18,6 +17,27 @@ namespace Bwr.Exchange.CashFlows.TreasuryCashFlows.Services
         public async Task CreateAsync(TreasuryCashFlow input)
         {
             await _treasuryCashFlowRepository.InsertAsync(input);
+        }
+
+        public IList<TreasuryCashFlow> Get(int treasuryId)
+        {
+            var treasuryCashFlows = _treasuryCashFlowRepository
+                .GetAllIncluding(
+                cu => cu.Currency,
+                tr => tr.Treasury).Where(tcf => tcf.TreasuryId == treasuryId);
+            return treasuryCashFlows.ToList();
+        }
+
+        public async Task<TreasuryCashFlow> GetLastAsync(int treasuryId, int currencyId)
+        {
+            TreasuryCashFlow treasuryCashFlow = null;
+            var treasuryCashFlows = await _treasuryCashFlowRepository
+                .GetAllListAsync(x => x.TreasuryId == treasuryId && x.CurrencyId == currencyId);
+            if (treasuryCashFlows.Any())
+            {
+                treasuryCashFlow = treasuryCashFlows.OrderByDescending(x => x.Id).FirstOrDefault();
+            }
+            return treasuryCashFlow;
         }
     }
 }

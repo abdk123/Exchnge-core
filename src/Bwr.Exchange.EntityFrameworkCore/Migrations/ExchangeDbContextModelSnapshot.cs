@@ -1525,6 +1525,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<double>("ClientCommission")
                         .HasColumnType("float");
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Commission")
                         .HasColumnType("float");
 
@@ -1533,6 +1536,9 @@ namespace Bwr.Exchange.Migrations
 
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
 
                     b.Property<double>("CurrentBalance")
                         .HasColumnType("float");
@@ -1546,6 +1552,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("InstrumentNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1558,22 +1567,33 @@ namespace Bwr.Exchange.Migrations
                     b.Property<bool>("Matched")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("Shaded")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("TransactionId")
+                    b.Property<int>("TransactionId")
                         .HasColumnType("int");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransactionId");
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("CurrencyId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ClientCashFlow");
+                    b.ToTable("ClientCashFlows");
                 });
 
             modelBuilder.Entity("Bwr.Exchange.CashFlows.CompanyCashFlows.CompanyCashFlow", b =>
@@ -1592,11 +1612,17 @@ namespace Bwr.Exchange.Migrations
                     b.Property<double>("CompanyCommission")
                         .HasColumnType("float");
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
 
                     b.Property<double>("CurrentBalance")
                         .HasColumnType("float");
@@ -1610,6 +1636,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("InstrumentNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1622,35 +1651,44 @@ namespace Bwr.Exchange.Migrations
                     b.Property<bool>("Matched")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("Shaded")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("TransactionId")
+                    b.Property<int>("TransactionId")
                         .HasColumnType("int");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransactionId");
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CurrencyId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CompanyCashFlow");
+                    b.ToTable("CompanyCashFlows");
                 });
 
             modelBuilder.Entity("Bwr.Exchange.CashFlows.Transaction", b =>
                 {
                     b.Property<int>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.HasKey("TransactionId");
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.HasKey("TransactionId", "TransactionType");
 
                     b.ToTable("Transaction");
                 });
@@ -1671,6 +1709,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
                     b.Property<double>("CurrentBalance")
                         .HasColumnType("float");
 
@@ -1683,6 +1724,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("InstrumentNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1692,14 +1736,42 @@ namespace Bwr.Exchange.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("TransactionId")
+                    b.Property<bool>("Matched")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Shaded")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TransactionId")
                         .HasColumnType("int");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TreasuryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransactionId");
+                    b.HasIndex("CurrencyId");
 
-                    b.ToTable("TreasuryCashFlow");
+                    b.HasIndex("TreasuryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TreasuryCashFlows");
                 });
 
             modelBuilder.Entity("Bwr.Exchange.Customers.Customer", b =>
@@ -2340,6 +2412,128 @@ namespace Bwr.Exchange.Migrations
                     b.ToTable("TreasuryBalances");
                 });
 
+            modelBuilder.Entity("Bwr.Exchange.Transfers.IncomeTransfers.IncomeTransfer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("IncomeTransfer");
+                });
+
+            modelBuilder.Entity("Bwr.Exchange.Transfers.IncomeTransfers.IncomeTransferDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("BeneficiaryId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("ClientCommission")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Commission")
+                        .HasColumnType("float");
+
+                    b.Property<double>("CompanyCommission")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IncomeTransferId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ToClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ToCompanyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BeneficiaryId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("IncomeTransferId");
+
+                    b.HasIndex("SenderId");
+
+                    b.HasIndex("ToClientId");
+
+                    b.HasIndex("ToCompanyId");
+
+                    b.ToTable("IncomeTransferDetail");
+                });
+
             modelBuilder.Entity("Bwr.Exchange.Transfers.OutgoingTransfer", b =>
                 {
                     b.Property<int>("Id")
@@ -2410,7 +2604,7 @@ namespace Bwr.Exchange.Migrations
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ReceivesdAmount")
+                    b.Property<double>("ReceivedAmount")
                         .HasColumnType("float");
 
                     b.Property<int?>("SenderId")
@@ -2436,6 +2630,108 @@ namespace Bwr.Exchange.Migrations
                     b.HasIndex("ToCompanyId");
 
                     b.ToTable("OutgoingTransfers");
+                });
+
+            modelBuilder.Entity("Bwr.Exchange.TreasuryActions.TreasuryAction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ActionType")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ExchangePartyClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ExchangePartyCompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ExpenseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdentificationNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IncomeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IncomeTransferDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InstrumentNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Issuer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("MainAccount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MainAccountClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MainAccountCompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TreasuryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("ExchangePartyClientId");
+
+                    b.HasIndex("ExchangePartyCompanyId");
+
+                    b.HasIndex("ExpenseId");
+
+                    b.HasIndex("IncomeId");
+
+                    b.HasIndex("IncomeTransferDetailId");
+
+                    b.HasIndex("MainAccountClientId");
+
+                    b.HasIndex("MainAccountCompanyId");
+
+                    b.HasIndex("TreasuryId");
+
+                    b.ToTable("TreasuryActions");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
@@ -2636,9 +2932,17 @@ namespace Bwr.Exchange.Migrations
 
             modelBuilder.Entity("Bwr.Exchange.CashFlows.ClientCashFlows.ClientCashFlow", b =>
                 {
-                    b.HasOne("Bwr.Exchange.CashFlows.Transaction", "Transaction")
+                    b.HasOne("Bwr.Exchange.Settings.Clients.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("TransactionId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bwr.Exchange.Settings.Currencies.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Bwr.Exchange.Authorization.Users.User", "User")
                         .WithMany()
@@ -2647,9 +2951,17 @@ namespace Bwr.Exchange.Migrations
 
             modelBuilder.Entity("Bwr.Exchange.CashFlows.CompanyCashFlows.CompanyCashFlow", b =>
                 {
-                    b.HasOne("Bwr.Exchange.CashFlows.Transaction", "Transaction")
+                    b.HasOne("Bwr.Exchange.Settings.Companies.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("TransactionId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bwr.Exchange.Settings.Currencies.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Bwr.Exchange.Authorization.Users.User", "User")
                         .WithMany()
@@ -2658,9 +2970,21 @@ namespace Bwr.Exchange.Migrations
 
             modelBuilder.Entity("Bwr.Exchange.CashFlows.TreasuryCashFlows.TreasuryCashFlow", b =>
                 {
-                    b.HasOne("Bwr.Exchange.CashFlows.Transaction", "Transaction")
+                    b.HasOne("Bwr.Exchange.Settings.Currencies.Currency", "Currency")
                         .WithMany()
-                        .HasForeignKey("TransactionId");
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bwr.Exchange.Settings.Treasuries.Treasury", "Treasury")
+                        .WithMany()
+                        .HasForeignKey("TreasuryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bwr.Exchange.Authorization.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Bwr.Exchange.MultiTenancy.Tenant", b =>
@@ -2763,6 +3087,44 @@ namespace Bwr.Exchange.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Bwr.Exchange.Transfers.IncomeTransfers.IncomeTransfer", b =>
+                {
+                    b.HasOne("Bwr.Exchange.Settings.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+                });
+
+            modelBuilder.Entity("Bwr.Exchange.Transfers.IncomeTransfers.IncomeTransferDetail", b =>
+                {
+                    b.HasOne("Bwr.Exchange.Customers.Customer", "Beneficiary")
+                        .WithMany()
+                        .HasForeignKey("BeneficiaryId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Currencies.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bwr.Exchange.Transfers.IncomeTransfers.IncomeTransfer", "IncomeTransfer")
+                        .WithMany("IncomeTransferDetails")
+                        .HasForeignKey("IncomeTransferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bwr.Exchange.Customers.Customer", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Clients.Client", "ToClient")
+                        .WithMany()
+                        .HasForeignKey("ToClientId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Companies.Company", "ToCompany")
+                        .WithMany()
+                        .HasForeignKey("ToCompanyId");
+                });
+
             modelBuilder.Entity("Bwr.Exchange.Transfers.OutgoingTransfer", b =>
                 {
                     b.HasOne("Bwr.Exchange.Customers.Customer", "Beneficiary")
@@ -2798,6 +3160,45 @@ namespace Bwr.Exchange.Migrations
                         .HasForeignKey("ToCompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Bwr.Exchange.TreasuryActions.TreasuryAction", b =>
+                {
+                    b.HasOne("Bwr.Exchange.Settings.Currencies.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Clients.Client", "ExchangePartyClient")
+                        .WithMany()
+                        .HasForeignKey("ExchangePartyClientId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Companies.Company", "ExchangePartyCompany")
+                        .WithMany()
+                        .HasForeignKey("ExchangePartyCompanyId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Expenses.Expense", "Expense")
+                        .WithMany()
+                        .HasForeignKey("ExpenseId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Incomes.Income", "Income")
+                        .WithMany()
+                        .HasForeignKey("IncomeId");
+
+                    b.HasOne("Bwr.Exchange.Transfers.IncomeTransfers.IncomeTransferDetail", "IncomeTransferDetail")
+                        .WithMany()
+                        .HasForeignKey("IncomeTransferDetailId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Clients.Client", "MainAccountClient")
+                        .WithMany()
+                        .HasForeignKey("MainAccountClientId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Companies.Company", "MainAccountCompany")
+                        .WithMany()
+                        .HasForeignKey("MainAccountCompanyId");
+
+                    b.HasOne("Bwr.Exchange.Settings.Treasuries.Treasury", "Treasury")
+                        .WithMany()
+                        .HasForeignKey("TreasuryId");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
