@@ -31,29 +31,80 @@ namespace Bwr.Exchange.TreasuryActions.Factories
                 //الحساب الرئيسي مصاريف عامة وجهة الصرف الصندوق
                 if(input.MainAccount == MainAccountType.Expense && input.TreasuryId != null)
                     return new SpendMainAccountExpensesExchangePartyTreasuryDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي مصاريف عامة وجهة الصرف العميل
+                if (input.MainAccount == MainAccountType.Expense && input.ExchangePartyClientId != null)
+                    return new SpendMainAccountExpensesExchangePartyClientDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي مصاريف عامة وجهة الصرف الشركة
+                if (input.MainAccount == MainAccountType.Expense && input.ExchangePartyCompanyId != null)
+                    return new SpendMainAccountExpensesExchangePartyCompanyDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+                
                 //الحساب الرئيسي ذمم عملاء وجهة الصرف الصندوق
                 if (input.MainAccount == MainAccountType.ClientReceivables && input.TreasuryId != null)
                     return new SpendMainAccountClientExchangePartyTreasuryDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
 
+                //الحساب الرئيسي ذمم عملاء وجهة الصرف العملاء
+                if (input.MainAccount == MainAccountType.ClientReceivables && input.ExchangePartyClientId != null)
+                    return new SpendMainAccountClientExchangePartyClientDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي ذمم عملاء وجهة الصرف الشركة
+                if (input.MainAccount == MainAccountType.ClientReceivables && input.ExchangePartyCompanyId != null)
+                    return new SpendMainAccountClientExchangePartyCompanyDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
                 //الحساب الرئيسي ذمم شركات وجهة الصرف الصندوق
                 if (input.MainAccount == MainAccountType.CompanyReceivables && input.TreasuryId != null)
                     return new SpendMainAccountCompanyExchangePartyTreasuryDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي ذمم شركات وجهة الصرف الشركة
+                if (input.MainAccount == MainAccountType.CompanyReceivables && input.ExchangePartyCompanyId != null)
+                    return new SpendMainAccountCompanyExchangePartyCompanyDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي ذمم شركات وجهة الصرف العملاء
+                if (input.MainAccount == MainAccountType.CompanyReceivables && input.ExchangePartyClientId != null)
+                    return new SpendMainAccountCompanyExchangePartyClientDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+
             }
 
             //قبض
             if (input.ActionType == TreasuryActionType.Receipt)
             {
                 //الحساب الرئيسي إيرادات عامة وجهة الصرف الصندوق
-                if (input.IncomeId != null && input.TreasuryId != null)
+                if (input.MainAccount == MainAccountType.Income && input.TreasuryId != null)
                     return new ReceiptMainAccountIncomesExchangePartyTreasuryDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي إيرادات عامة وجهة الصرف العميل
+                if (input.MainAccount == MainAccountType.Income && input.ExchangePartyClientId != null)
+                    return new ReceiptMainAccountIncomesExchangePartyClientDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي إيرادات عامة وجهة الصرف الشركة
+                if (input.MainAccount == MainAccountType.Income && input.ExchangePartyCompanyId != null)
+                    return new ReceiptMainAccountIncomesExchangePartyCompanyDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
 
                 //الحساب الرئيسي ذمم عملاء وجهة الصرف الصندوق
                 if (input.MainAccount == MainAccountType.ClientReceivables && input.TreasuryId != null)
                     return new ReceiptMainAccountClientExchangePartyTreasuryDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
 
-                //الحساب الرئيسي ذمم شركات وجهة الصرف الصندوق
+                //الحساب الرئيسي ذمم عملاء وجهة الصرف العميل
+                if (input.MainAccount == MainAccountType.ClientReceivables && input.ExchangePartyClientId != null)
+                    return new ReceiptMainAccountClientExchangePartyClientDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي ذمم عملاء وجهة الصرف العميل
+                if (input.MainAccount == MainAccountType.ClientReceivables && input.ExchangePartyCompanyId != null)
+                    return new ReceiptMainAccountClientExchangePartyCompanyDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي ذمم شركات وجهة الصرف الشركة
                 if (input.MainAccount == MainAccountType.CompanyReceivables && input.TreasuryId != null)
                     return new ReceiptMainAccountCompanyExchangePartyTreasuryDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي ذمم شركات وجهة الصرف الشركة
+                if (input.MainAccount == MainAccountType.CompanyReceivables && input.ExchangePartyCompanyId != null)
+                    return new ReceiptMainAccountCompanyExchangePartyCompanyDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
+
+                //الحساب الرئيسي ذمم شركات وجهة الصرف العميل
+                if (input.MainAccount == MainAccountType.CompanyReceivables && input.ExchangePartyClientId != null)
+                    return new ReceiptMainAccountCompanyExchangePartyClientDomainService(_treasuryActionRepository, _unitOfWorkManager, input);
 
             }
 

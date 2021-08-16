@@ -8,5 +8,7 @@
         public const string CompanyReceivable = "ذمم شركات";
         public const string Spend = "صرف";
         public const string Receipt = "قبض";
+        public const string ReceiptFromHim = "قبض منه";
+        public const string SpendToHim = "صرف له";
     }
 }
