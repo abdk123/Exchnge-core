@@ -139,13 +139,13 @@
     <text name="DeleteCurrency">حذف عملة</text>
     <text name="DoYouWantToRemoveTheCurrency">هل تريد حذف العملة؟</text>
     
-    <text name="Expense">النفقة</text>
-    <text name="ExpenseName">اسم النفقة</text>
-    <text name="Expenses">النفقات</text>
-    <text name="CreateNewExpense">إضافة نفقة جديد</text>
-    <text name="EditExpense">تعديل نفقة</text>
-    <text name="DeleteExpense">حذف نفقة</text>
-    <text name="DoYouWantToRemoveTheExpense">هل تريد حذف النفقة؟</text>
+    <text name="Expense">المصاريف</text>
+    <text name="ExpenseName">الاسم</text>
+    <text name="Expenses">المصاريف</text>
+    <text name="CreateNewExpense">إضافة جديد</text>
+    <text name="EditExpense">تعديل مصاريف</text>
+    <text name="DeleteExpense">حذف مصاريف</text>
+    <text name="DoYouWantToRemoveTheExpense">هل تريد الحذف ؟</text>
     
     <text name="Income">الايراد</text>
     <text name="IncomeName">اسم الايراد</text>
@@ -189,7 +189,7 @@
     <text name="DeleteClient">حذف عميل</text>
     <text name="ClientBalances">أرصدة العميل</text>
     
-    <text name="Company">العمبل</text>
+    <text name="Company">الشركة</text>
     <text name="CompanyInfo">بيانات الشركة</text>
     <text name="Companies">الشركات</text>
     <text name="CompanyBalances">أرصدة الشركة</text>

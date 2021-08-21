@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Repositories;
+using Bwr.Exchange.Settings.Clients.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,10 +9,14 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows.Services
     public class ClientCashFlowManager : IClientCashFlowManager
     {
         private readonly IRepository<ClientCashFlow> _clientCashFlowRepository;
-
-        public ClientCashFlowManager(IRepository<ClientCashFlow> clientCashFlowRepository)
+        private readonly IClientManager _clientManager;
+        public ClientCashFlowManager(
+            IRepository<ClientCashFlow> clientCashFlowRepository, 
+            IClientManager clientManager
+            )
         {
             _clientCashFlowRepository = clientCashFlowRepository;
+            _clientManager = clientManager;
         }
 
         public async Task Create(ClientCashFlow input)

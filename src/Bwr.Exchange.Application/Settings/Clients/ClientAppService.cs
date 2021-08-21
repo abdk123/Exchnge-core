@@ -1,8 +1,9 @@
 ﻿using Abp.UI;
+using Bwr.Exchange.CashFlows.ClientCashFlows.Services;
 using Bwr.Exchange.Settings.Clients.Dto;
+using Bwr.Exchange.Settings.Clients.Dto.ClientBalances;
 using Bwr.Exchange.Settings.Clients.Services;
 using Bwr.Exchange.Shared.Dto;
-using Bwr.Exchange.Shared.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Base;
 using System.Collections;
@@ -14,22 +15,27 @@ namespace Bwr.Exchange.Settings.Clients
 {
     public class ClientAppService : ExchangeAppServiceBase, IClientAppService
     {
-        private readonly IClientManager _countryManager;
-        public ClientAppService(ClientManager countryManager)
+        private readonly IClientManager _clientManager;
+        private readonly IClientCashFlowManager _clientCashFlowManager;
+        public ClientAppService(
+            IClientManager clientManager, 
+            IClientCashFlowManager clientCashFlowManager
+            )
         {
-            _countryManager = countryManager;
+            _clientManager = clientManager;
+            _clientCashFlowManager = clientCashFlowManager;
         }
 
         public async Task<IList<ClientDto>> GetAllAsync()
         {
-            var countries = await _countryManager.GetAllAsync();
+            var countries = await _clientManager.GetAllAsync();
 
             return ObjectMapper.Map<List<ClientDto>>(countries);
         }
         [HttpPost]
         public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
         {
-            var data = _countryManager.GetAllWithDetail();
+            var data = _clientManager.GetAllWithDetail();
             IEnumerable<ReadClientDto> countries = ObjectMapper.Map<List<ReadClientDto>>(data);
 
             var operations = new DataOperations();
@@ -65,16 +71,16 @@ namespace Bwr.Exchange.Settings.Clients
         }
         public UpdateClientDto GetForEdit(int id)
         {
-            var country =  _countryManager.GetByIdWithDetail(id);
-            return ObjectMapper.Map<UpdateClientDto>(country);
+            var client =  _clientManager.GetByIdWithDetail(id);
+            return ObjectMapper.Map<UpdateClientDto>(client);
         }
         public async Task<ClientDto> CreateAsync(CreateClientDto input)
         {
             CheckBeforeCreate(input);
 
-            var country = ObjectMapper.Map<Client>(input);
+            var client = ObjectMapper.Map<Client>(input);
 
-            var createdClient = await _countryManager.InsertAndGetAsync(country);
+            var createdClient = await _clientManager.InsertAndGetAsync(client);
 
             return ObjectMapper.Map<ClientDto>(createdClient);
         }
@@ -82,17 +88,17 @@ namespace Bwr.Exchange.Settings.Clients
         {
             CheckBeforeUpdate(input);
 
-            var country = await _countryManager.GetByIdAsync(input.Id);
+            var client = await _clientManager.GetByIdAsync(input.Id);
 
-            ObjectMapper.Map<UpdateClientDto, Client>(input, country);
+            ObjectMapper.Map<UpdateClientDto, Client>(input, client);
 
-            var updatedClient = await _countryManager.UpdateAndGetAsync(country);
+            var updatedClient = await _clientManager.UpdateAndGetAsync(client);
 
             return ObjectMapper.Map<ClientDto>(updatedClient);
         }
         public async Task DeleteAsync(int id)
         {
-            await _countryManager.DeleteAsync(id);
+            await _clientManager.DeleteAsync(id);
         }
 
         #region Helper methods
@@ -100,7 +106,7 @@ namespace Bwr.Exchange.Settings.Clients
         {
             var validationResultMessage = string.Empty;
 
-            if (_countryManager.CheckIfNameAlreadyExist(input.Name))
+            if (_clientManager.CheckIfNameAlreadyExist(input.Name))
             {
                 validationResultMessage = L(ValidationResultMessage.NameAleadyExist);
             }
@@ -112,7 +118,7 @@ namespace Bwr.Exchange.Settings.Clients
         {
             var validationResultMessage = string.Empty;
 
-            if (_countryManager.CheckIfNameAlreadyExist(input.Id, input.Name))
+            if (_clientManager.CheckIfNameAlreadyExist(input.Id, input.Name))
             {
                 validationResultMessage = L(ValidationResultMessage.NameAleadyExist);
             }
@@ -121,7 +127,31 @@ namespace Bwr.Exchange.Settings.Clients
                 throw new UserFriendlyException(validationResultMessage);
         }
 
-        
+        public async Task<ClientBalanceDto> GetCurrentBalance(CurrentBalanceInputDto input)
+        {
+            var clientBalanceDto = new ClientBalanceDto()
+            {
+                ClientId = input.ClientId,
+                CurrencyId = input.CurrencyId
+            };
+            var previousClientBalance = await _clientCashFlowManager.GetLastAsync(input.ClientId, input.CurrencyId);
+            if (previousClientBalance != null)
+            {
+                clientBalanceDto.Balance = previousClientBalance.CurrentBalance;
+            }
+            else
+            {
+                var clientBalance = _clientManager.GetClientBalance(input.ClientId, input.CurrencyId);
+                if (clientBalance != null)
+                {
+                    clientBalanceDto.Balance = clientBalance.Balance;
+                }
+            }
+
+            return clientBalanceDto;
+        }
+
+
 
         #endregion
     }

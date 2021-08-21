@@ -17,6 +17,8 @@
     <ProjectReference Include="..\Bwr.Exchange.Core\Bwr.Exchange.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Customers\Map\" />
     <Folder Include="Settings\Commisions\" />
+    <Folder Include="Transfers\OutgoingTransfers\Map\" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@ using Bwr.Exchange.Settings.Currencies;
 using Bwr.Exchange.Settings.Expenses;
 using Bwr.Exchange.Settings.Incomes;
 using Bwr.Exchange.Settings.Treasuries;
+using Bwr.Exchange.Transfers;
 using Bwr.Exchange.Transfers.IncomeTransfers;
 using System;
 using System.Collections.Generic;
@@ -68,7 +69,7 @@ namespace Bwr.Exchange.TreasuryActions
         public virtual Income Income { get; set; }
         #endregion
 
-        #region Income Transfer Detail 
+        #region Income Transfer Detail
         public int? IncomeTransferDetailId { get; set; }
         [ForeignKey("IncomeTransferDetailId")]
         public virtual IncomeTransferDetail IncomeTransferDetail { get; set; }

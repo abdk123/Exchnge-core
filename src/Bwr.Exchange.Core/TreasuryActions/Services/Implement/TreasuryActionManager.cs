@@ -1,4 +1,5 @@
 ﻿using Bwr.Exchange.TreasuryActions.Factories;
+using System;
 using System.Threading.Tasks;
 
 namespace Bwr.Exchange.TreasuryActions.Services
@@ -15,6 +16,17 @@ namespace Bwr.Exchange.TreasuryActions.Services
 
         public async Task<TreasuryAction> CreateAsync(TreasuryAction input)
         {
+            //Add current time
+            var currentDate = DateTime.Now;
+            input.Date = new DateTime(
+                input.Date.Year,
+                input.Date.Month,
+                input.Date.Day,
+                currentDate.Hour,
+                currentDate.Minute,
+                currentDate.Second
+                );
+
             ITreasuryActionDomainService service = _treasuryActionFactory.CreateService(input);
             return await service.CreateTreasuryActionAsync();
         }
