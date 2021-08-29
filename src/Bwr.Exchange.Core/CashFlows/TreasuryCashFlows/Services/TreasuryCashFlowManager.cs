@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +26,20 @@ namespace Bwr.Exchange.CashFlows.TreasuryCashFlows.Services
                 .GetAllIncluding(
                 cu => cu.Currency,
                 tr => tr.Treasury).Where(tcf => tcf.TreasuryId == treasuryId);
+            return treasuryCashFlows.ToList();
+        }
+
+        public IList<TreasuryCashFlow> Get(int treasuryId, int currencyId, DateTime fromDate, DateTime toDate)
+        {
+            var treasuryCashFlows = _treasuryCashFlowRepository.GetAllIncluding(
+                cu => cu.Currency,
+                tr => tr.Treasury)
+                .Where(x =>
+                x.TreasuryId == treasuryId &&
+                x.CurrencyId == currencyId &&
+                x.Date >= fromDate &&
+                x.Date <= toDate);
+
             return treasuryCashFlows.ToList();
         }
 

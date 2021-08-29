@@ -16,7 +16,7 @@ namespace Bwr.Exchange.TreasuryActions.Services
 
         public async Task<TreasuryAction> CreateAsync(TreasuryAction input)
         {
-            //Add current time
+            //Date and time
             var currentDate = DateTime.Now;
             input.Date = new DateTime(
                 input.Date.Year,

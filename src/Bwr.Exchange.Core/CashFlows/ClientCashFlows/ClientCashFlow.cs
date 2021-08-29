@@ -13,7 +13,7 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows
         public virtual Client Client { get; set; }
         #endregion
         
-        public double Commission { get; set; }
+        
         public double ClientCommission { get; set; }
     }
 }

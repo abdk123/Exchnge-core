@@ -1,6 +1,13 @@
 ﻿using Bwr.Exchange.CashFlows.ClientCashFlows.Dto;
 using Bwr.Exchange.CashFlows.ClientCashFlows.Services;
+using Bwr.Exchange.Settings.Clients.Dto;
+using Bwr.Exchange.Shared.Dto;
+using Microsoft.AspNetCore.Mvc;
+using Syncfusion.EJ2.Base;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bwr.Exchange.CashFlows.ClientCashFlows
 {
@@ -18,6 +25,81 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows
             var clientCashFlows = _clientCashFlowManager.Get(input.ClientId);
             var clientCashFlowsDto = ObjectMapper.Map<List<ClientCashFlowDto>>(clientCashFlows);
             return clientCashFlowsDto;
+        }
+
+        [HttpPost]
+        public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
+        {
+            int clientId = 0, currencyId = 0;
+            DateTime fromDate = new DateTime(), toDate = new DateTime();
+            if(dm.Where != null)
+            {
+                GetWhereFilter(dm.Where, "clientId");
+                var clientFilter = GetWhereFilter(dm.Where, "clientId");
+                if (clientFilter != null)
+                {
+                    int.TryParse(clientFilter.value.ToString(), out clientId);
+                }
+
+                var currencyFilter = GetWhereFilter(dm.Where, "currencyId");
+                if (currencyFilter != null)
+                {
+                    int.TryParse(currencyFilter.value.ToString(), out currencyId);
+                }
+
+                var fromDateFilter = GetWhereFilter(dm.Where, "fromDate");
+                if (fromDateFilter != null)
+                {
+                    DateTime.TryParse(fromDateFilter.value.ToString(), out fromDate);
+                }
+
+                var toDateFilter = GetWhereFilter(dm.Where, "toDate");
+                if (toDateFilter != null)
+                {
+                    DateTime.TryParse(toDateFilter.value.ToString(), out toDate);
+                    toDate = new DateTime(toDate.Year, toDate.Month, toDate.Day, 23, 59, 59);
+                }
+
+            }
+
+            var clientCashFlows = _clientCashFlowManager.Get(clientId, currencyId, fromDate, toDate);
+            IEnumerable<ClientCashFlowDto> data = ObjectMapper.Map<List<ClientCashFlowDto>>(clientCashFlows);
+
+            var operations = new DataOperations();
+
+            IEnumerable groupDs = new List<ClientCashFlowDto>();
+            if (dm.Group != null)
+            {
+                groupDs = operations.PerformSelect(data, dm.Group);
+            }
+
+            var count = data.Count();
+
+            if (dm.Skip != 0)
+            {
+                data = operations.PerformSkip(data, dm.Skip);
+            }
+
+            if (dm.Take != 0)
+            {
+                data = operations.PerformTake(data, dm.Take);
+            }
+            
+            return new ReadGrudDto() { result = data, count = 0, groupDs = groupDs };
+        }
+
+        private WhereFilter GetWhereFilter(List<WhereFilter> filterOptions, string name)
+        {
+            var filter = filterOptions.FirstOrDefault(x => x.Field == name);
+            if (filter != null)
+                return filter;
+
+            foreach(var option in filterOptions)
+            {
+                return GetWhereFilter(option.predicates, name);
+            }
+
+            return null;
         }
     }
 }

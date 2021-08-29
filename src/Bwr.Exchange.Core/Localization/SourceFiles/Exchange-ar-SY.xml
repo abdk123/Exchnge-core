@@ -138,7 +138,7 @@
     <text name="EditCurrency">تعديل عملة</text>
     <text name="DeleteCurrency">حذف عملة</text>
     <text name="DoYouWantToRemoveTheCurrency">هل تريد حذف العملة؟</text>
-    
+
     <text name="Expense">المصاريف</text>
     <text name="ExpenseName">الاسم</text>
     <text name="Expenses">المصاريف</text>
@@ -146,7 +146,7 @@
     <text name="EditExpense">تعديل مصاريف</text>
     <text name="DeleteExpense">حذف مصاريف</text>
     <text name="DoYouWantToRemoveTheExpense">هل تريد الحذف ؟</text>
-    
+
     <text name="Income">الايراد</text>
     <text name="IncomeName">اسم الايراد</text>
     <text name="Incomes">الإيرادات</text>
@@ -171,7 +171,7 @@
 
     <text name="ClearFilters">مسح التصفية</text>
     <text name="ClearSorts">مسح الفرز</text>
-    
+
     <text name="Client">العميل</text>
     <text name="ClientInfo">بيانات العميل</text>
     <text name="Clients">العملاء</text>
@@ -188,7 +188,7 @@
     <text name="EditClient">تعديل عميل</text>
     <text name="DeleteClient">حذف عميل</text>
     <text name="ClientBalances">أرصدة العميل</text>
-    
+
     <text name="Company">الشركة</text>
     <text name="CompanyInfo">بيانات الشركة</text>
     <text name="Companies">الشركات</text>
@@ -197,7 +197,7 @@
     <text name="CreateNewCompany">تعريف شركة جديد</text>
     <text name="EditCompany">تعديل شركة</text>
     <text name="DeleteCompany">حذف شركة</text>
-    
+
     <text name="InitialBalance">الرصيد الاولي للصندوق</text>
 
     <text name="Commision">العمولة</text>
@@ -211,7 +211,7 @@
     <text name="Value">القيمة</text>
     <text name="Percentage">النسبة المئوية</text>
     <text name="DoYouWantToRemoveTheCommision">هل تريد حذف العمولة؟</text>
-    
+
     <text name="OnHim">عليه</text>
     <text name="ForHim">له</text>
 
@@ -225,6 +225,7 @@
     <text name="Transaction">عملية</text>
     <text name="TransactionType">نوع العملية</text>
     <text name="Matched">مطابق</text>
+    <text name="Matcher">اسم المطابق</text>
     <text name="Matching">المطابقة</text>
     <text name="Shaded">مضلل</text>
     <text name="Shading">تظليل</text>
@@ -269,6 +270,9 @@
     <text name="ExchangeParty">جهة الصرف</text>
     <text name="Issuer">جهة الإصدار</text>
     <text name="IdentificationNumber">رقم الهوية</text>
-  
+    <text name="Type">النوع</text>
+    <text name="CompanyBalanceStatement">كشف رصيد الشركة</text>
+    <text name="TreasuryBalanceStatement">كشف رصيد الصندوق</text>
+    <text name="YouMustCreateTreasuryFirst">يجب تعريف الصندوق الرئيسي أولاً</text>
   </texts>
 </localizationDictionary>

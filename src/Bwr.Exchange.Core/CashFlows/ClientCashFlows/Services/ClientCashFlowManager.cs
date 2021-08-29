@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Repositories;
 using Bwr.Exchange.Settings.Clients.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +35,20 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows.Services
             return clientCashFlows.ToList();
         }
 
+        public IList<ClientCashFlow> Get(int clientId, int currencyId, DateTime fromDate, DateTime toDate)
+        {
+            var clientCashFlows = _clientCashFlowRepository.GetAllIncluding(
+                cu => cu.Currency,
+                tr => tr.Client)
+                .Where(x =>
+                x.ClientId == clientId && 
+                x.CurrencyId == currencyId && 
+                x.Date >= fromDate && 
+                x.Date <= toDate);
+
+            return clientCashFlows.ToList();
+        }
+
         public async Task<ClientCashFlow> GetLastAsync(int clientId, int currencyId)
         {
             ClientCashFlow clientCashFlow = null;
@@ -46,4 +61,6 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows.Services
             return clientCashFlow;
         }
     }
+
+
 }

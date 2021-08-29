@@ -46,7 +46,8 @@ namespace Bwr.Exchange.TreasuryActions
             {
                 Id = treasury.Id,
                 Name = treasury.Name,
-                Group = "Treasury"
+                Group = "Treasury",
+                ExchangePartyId = $"Tr{treasury.Id}"
             });
 
             exchangePartiesDto.AddRange((from e in clients
@@ -54,7 +55,8 @@ namespace Bwr.Exchange.TreasuryActions
                                          {
                                              Id = e.Id,
                                              Name = e.Name,
-                                             Group = "Client"
+                                             Group = "Client",
+                                             ExchangePartyId = $"Cl{e.Id}"
                                          }).ToList());
 
             exchangePartiesDto.AddRange((from e in companies
@@ -62,7 +64,8 @@ namespace Bwr.Exchange.TreasuryActions
                                          {
                                              Id = e.Id,
                                              Name = e.Name,
-                                             Group = "Company"
+                                             Group = "Company",
+                                             ExchangePartyId = $"Co{e.Id}"
                                          }).ToList());
             return exchangePartiesDto;
         }

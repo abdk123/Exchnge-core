@@ -10,5 +10,8 @@
         public const string Receipt = "قبض";
         public const string ReceiptFromHim = "قبض منه";
         public const string SpendToHim = "صرف له";
+        public const string TransferToHim = "حوالة له";
+        public const string TransferFromHim = "حوالة منه";
+        public const string CashTransfer = "حوالة نقدية";
     }
 }

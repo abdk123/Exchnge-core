@@ -30,7 +30,6 @@ namespace Bwr.Exchange.TreasuryActions.Services.Implement
             int treasuryActionId;
             using (var unitOfWork = _unitOfWorkManager.Begin())
             {
-                TreasuryAction.Date = DateTime.Now;
                 treasuryActionId = await _treasuryActionRepository.InsertAndGetIdAsync(TreasuryAction);
 
                 TreasuryAction = GetByIdWithDetail(treasuryActionId);

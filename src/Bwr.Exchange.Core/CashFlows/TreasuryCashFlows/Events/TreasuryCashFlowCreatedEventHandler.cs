@@ -35,7 +35,10 @@ namespace Bwr.Exchange.CashFlows.TreasuryCashFlows.Events
                 TransactionType = eventData.TransactionType,
                 Type = eventData.Type,
                 Note = eventData.Note,
-                Name = eventData.Name
+                Name = eventData.Name,
+                Destination = eventData.Destination,
+                Sender = eventData.Sender,
+                Beneficiary = eventData.Beneficiary
             };
 
             await _treasuryCashFlowManager.CreateAsync(treasuryCashFlow);

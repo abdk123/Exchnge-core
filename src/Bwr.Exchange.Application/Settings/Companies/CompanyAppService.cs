@@ -1,8 +1,9 @@
 ﻿using Abp.UI;
+using Bwr.Exchange.CashFlows.CompanyCashFlows.Services;
 using Bwr.Exchange.Settings.Companies.Dto;
+using Bwr.Exchange.Settings.Companies.Dto.CompanyBalances;
 using Bwr.Exchange.Settings.Companies.Services;
 using Bwr.Exchange.Shared.Dto;
-using Bwr.Exchange.Shared.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Base;
 using System.Collections;
@@ -15,9 +16,14 @@ namespace Bwr.Exchange.Settings.Companies
     public class CompanyAppService : ExchangeAppServiceBase, ICompanyAppService
     {
         private readonly CompanyManager _companyManager;
-        public CompanyAppService(CompanyManager companyManager)
+        private readonly CompanyCashFlowManager _companyCashFlowManager;
+        public CompanyAppService(
+            CompanyManager companyManager, 
+            CompanyCashFlowManager companyCashFlowManager
+            )
         {
             _companyManager = companyManager;
+            _companyCashFlowManager = companyCashFlowManager;
         }
 
         public async Task<IList<CompanyDto>> GetAllAsync()
@@ -121,7 +127,29 @@ namespace Bwr.Exchange.Settings.Companies
                 throw new UserFriendlyException(validationResultMessage);
         }
 
-        
+        public async Task<CompanyBalanceDto> GetCurrentBalance(CompanyBalanceInputDto input)
+        {
+            var companyBalanceDto = new CompanyBalanceDto()
+            {
+                CompanyId = input.CompanyId,
+                CurrencyId = input.CurrencyId
+            };
+            var previousCompanyBalance = await _companyCashFlowManager.GetLastAsync(input.CompanyId, input.CurrencyId);
+            if (previousCompanyBalance != null)
+            {
+                companyBalanceDto.Balance = previousCompanyBalance.CurrentBalance;
+            }
+            else
+            {
+                var companyBalance = _companyManager.GetCompanyBalance(input.CompanyId, input.CurrencyId);
+                if (companyBalance != null)
+                {
+                    companyBalanceDto.Balance = companyBalance.Balance;
+                }
+            }
+
+            return companyBalanceDto;
+        }
 
         #endregion
     }

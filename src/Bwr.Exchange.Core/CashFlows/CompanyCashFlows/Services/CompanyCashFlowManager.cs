@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,6 +40,20 @@ namespace Bwr.Exchange.CashFlows.CompanyCashFlows.Services
                 companyCashFlow = companyCashFlows.OrderByDescending(x => x.Id).FirstOrDefault();
             }
             return companyCashFlow;
+        }
+
+        public IList<CompanyCashFlow> Get(int companyId, int currencyId, DateTime fromDate, DateTime toDate)
+        {
+            var companyCashFlows = _companyCashFlowRepository.GetAllIncluding(
+                cu => cu.Currency,
+                tr => tr.Company)
+                .Where(x =>
+                x.CompanyId == companyId &&
+                x.CurrencyId == currencyId &&
+                x.Date >= fromDate &&
+                x.Date <= toDate);
+
+            return companyCashFlows.ToList();
         }
     }
 }

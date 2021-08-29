@@ -1522,6 +1522,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<string>("Beneficiary")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("ClientCommission")
                         .HasColumnType("float");
 
@@ -1552,6 +1555,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Destination")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("InstrumentNo")
                         .HasColumnType("nvarchar(max)");
 
@@ -1568,6 +1574,9 @@ namespace Bwr.Exchange.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sender")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Shaded")
@@ -1606,6 +1615,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<string>("Beneficiary")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Commission")
                         .HasColumnType("float");
 
@@ -1636,6 +1648,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Destination")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("InstrumentNo")
                         .HasColumnType("nvarchar(max)");
 
@@ -1652,6 +1667,9 @@ namespace Bwr.Exchange.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sender")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Shaded")
@@ -1703,6 +1721,12 @@ namespace Bwr.Exchange.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<string>("Beneficiary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Commission")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -1724,6 +1748,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Destination")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("InstrumentNo")
                         .HasColumnType("nvarchar(max)");
 
@@ -1743,6 +1770,9 @@ namespace Bwr.Exchange.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sender")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Shaded")
@@ -2613,6 +2643,9 @@ namespace Bwr.Exchange.Migrations
                     b.Property<int>("ToCompanyId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TreasuryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BeneficiaryId");
@@ -2628,6 +2661,8 @@ namespace Bwr.Exchange.Migrations
                     b.HasIndex("SenderId");
 
                     b.HasIndex("ToCompanyId");
+
+                    b.HasIndex("TreasuryId");
 
                     b.ToTable("OutgoingTransfers");
                 });
@@ -3160,6 +3195,10 @@ namespace Bwr.Exchange.Migrations
                         .HasForeignKey("ToCompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Bwr.Exchange.Settings.Treasuries.Treasury", "Treasury")
+                        .WithMany()
+                        .HasForeignKey("TreasuryId");
                 });
 
             modelBuilder.Entity("Bwr.Exchange.TreasuryActions.TreasuryAction", b =>

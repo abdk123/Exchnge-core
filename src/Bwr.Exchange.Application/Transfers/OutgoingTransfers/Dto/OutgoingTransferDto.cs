@@ -4,5 +4,6 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Dto
 {
     public class OutgoingTransferDto : EntityDto
     {
+
     }
 }

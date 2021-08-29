@@ -31,11 +31,14 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows.Events
                 Amount = eventData.Amount,
                 Note = eventData.Note,
                 Type = eventData.Type,
-                CurrentBalance = previousBalance + eventData.Amount,
+                CurrentBalance = previousBalance + eventData.Amount + eventData.Commission + eventData.ClientCommission,
                 TransactionId = eventData.TransactionId,
                 TransactionType = eventData.TransactionType,
                 Commission = eventData.Commission,
-                ClientCommission = eventData.ClientCommission
+                ClientCommission = eventData.ClientCommission,
+                Destination = eventData.Destination,
+                Sender = eventData.Sender,
+                Beneficiary = eventData.Beneficiary
             };
 
             await _clientCashFlowManager.Create(clientCashFlow);

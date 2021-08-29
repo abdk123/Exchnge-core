@@ -1,9 +1,10 @@
 ﻿using Abp.Events.Bus;
+using Bwr.Exchange.CashFlows.Shared;
 using System;
 
 namespace Bwr.Exchange.CashFlows.ClientCashFlows.Events
 {
-    public class ClientCashFlowCreatedEventData : EventData
+    public class ClientCashFlowCreatedEventData : CashFlowEventData
     {
         public ClientCashFlowCreatedEventData() { }
         public ClientCashFlowCreatedEventData(
@@ -33,16 +34,8 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows.Events
             Note = note;
         }
 
-        public int? CurrencyId { get; set; }
         public int? ClientId { get; set; }
-        public DateTime Date { get; set; }
-        public int TransactionId { get; set; }
-        public TransactionType TransactionType { get; set; }
-        public string Type { get; set; }
-        public string Note { get; set; }
-        public double Amount { get; set; }
-        public double Commission { get; set; }
         public double ClientCommission { get; set; }
-        public string InstrumentNo { get; set; }
+        
     }
 }

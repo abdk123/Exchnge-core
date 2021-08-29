@@ -11,7 +11,7 @@ namespace Bwr.Exchange.CashFlows.CompanyCashFlows
         [ForeignKey("CompanyId")]
         public virtual Company Company { get; set; }
         #endregion
-        public double Commission { get; set; }
         public double CompanyCommission { get; set; }
+        
     }
 }

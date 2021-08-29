@@ -1,6 +1,7 @@
 ﻿using Bwr.Exchange.Settings.Clients;
 using Bwr.Exchange.Settings.Companies;
 using Bwr.Exchange.Settings.Countries;
+using Bwr.Exchange.Settings.Treasuries;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -34,6 +35,12 @@ namespace Bwr.Exchange.Transfers
         public int? FromClientId { get; set; }
         [ForeignKey("FromClientId")]
         public virtual Client FromClient { get; set; }
+        #endregion
+
+        #region Treasury
+        public int? TreasuryId { get; set; }
+        [ForeignKey("TreasuryId")]
+        public virtual Treasury Treasury { get; set; }
         #endregion
 
         #endregion

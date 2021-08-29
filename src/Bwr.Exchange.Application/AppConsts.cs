@@ -11,6 +11,7 @@
     public class ValidationResultMessage
     {
         public const string EmployeeNameAleadyExist = "EmployeeNameAleadyExist";
+        public const string YouMustCreateTreasuryFirst = "YouMustCreateTreasuryFirst";
         public const string EmailAddressAleadyExist = "EmailAddressAleadyExist";
         public const string NameAleadyExist = "NameAleadyExist";
         public const string ShortNameAleadyExist = "ShortNameAleadyExist";
