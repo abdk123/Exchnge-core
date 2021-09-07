@@ -30,7 +30,7 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
             EventBus = NullEventBus.Instance;
         }
 
-        public async Task<OutgoingTransfer> Create(OutgoingTransfer input)
+        public async Task<OutgoingTransfer> CreateAsync(OutgoingTransfer input)
         {
             //Date and time
             var currentDate = DateTime.Now;
@@ -45,28 +45,12 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
 
             IOutgoingTransferDomainService service = _outgoingTransferFactory.CreateService(input);
             return await service.CreateAsync();
-
-            int outgoingTransferId = 0;
-            using (var unitOfWork = _unitOfWorkManager.Begin())
-            {
-                outgoingTransferId = await _outgoingTransferRepository.InsertAndGetIdAsync(input);
-                EventBus.Trigger(new ClientCashFlowCreatedEventData
-                {
-                    Amount = input.Amount,
-                    Commission = input.Commission,
-                    ClientCommission = input.ClientCommission,
-                    Date = input.Date,
-                    TransactionId = outgoingTransferId,
-                    TransactionType = TransactionType.OutgoingTransfer
-                });
-            }
-
-            return await GetByIdAsync(outgoingTransferId);
         }
 
         public async Task<OutgoingTransfer> GetByIdAsync(int id)
         {
             return await _outgoingTransferRepository.FirstOrDefaultAsync(id);
         }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Services;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bwr.Exchange.Customers.Services
@@ -7,5 +8,8 @@ namespace Bwr.Exchange.Customers.Services
     {
         Task<Customer> GetByIdAsync(int id);
         Task<Customer> CreateAsync(Customer customer);
+        Task<Customer> CreateOrUpdateAsync(Customer customer);
+        Task<IList<Customer>> GetAllAsync();
+        Task<Customer> GetByNameAsync(string name);
     }
 }

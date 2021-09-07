@@ -5,7 +5,7 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
 {
     public interface IOutgoingTransferManager : IDomainService
     {
-        Task<OutgoingTransfer> Create(OutgoingTransfer input);
+        Task<OutgoingTransfer> CreateAsync(OutgoingTransfer input);
         Task<OutgoingTransfer> GetByIdAsync(int id);
     }
 }
