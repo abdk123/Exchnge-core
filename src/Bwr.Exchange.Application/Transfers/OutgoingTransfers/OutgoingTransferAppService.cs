@@ -1,6 +1,7 @@
 ﻿using Bwr.Exchange.Customers;
 using Bwr.Exchange.Customers.Dto;
 using Bwr.Exchange.Customers.Services;
+using Bwr.Exchange.Settings.Treasuries.Services;
 using Bwr.Exchange.Transfers.OutgoingTransfers.Dto;
 using Bwr.Exchange.Transfers.OutgoingTransfers.Services;
 using System;
@@ -11,20 +12,22 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers
     public class OutgoingTransferAppService : ExchangeAppServiceBase, IOutgoingTransferAppService
     {
         private readonly IOutgoingTransferManager _outgoingTransferManager;
-        private readonly CustomerManager _customerManager;
-
+        private readonly ICustomerManager _customerManager;
+        private readonly ITreasuryManager _treasuryManager;
         public OutgoingTransferAppService(
             OutgoingTransferManager outgoingTransferManager, 
-            CustomerManager customerManager
+            ICustomerManager customerManager,
+            ITreasuryManager treasuryManager
             )
         {
             _outgoingTransferManager = outgoingTransferManager;
             _customerManager = customerManager;
+            _treasuryManager = treasuryManager;
         }
 
         public async Task<OutgoingTransferDto> CreateAsync(OutgoingTransferDto input)
         {
-            
+            var treasury = await _treasuryManager.GetTreasuryAsync();
             var outgoingTransfer = ObjectMapper.Map<OutgoingTransfer>(input);
 
             var sender = await CreateOrUpdateCustomer(input.Sender);
@@ -32,6 +35,8 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers
 
             outgoingTransfer.SenderId = sender?.Id;
             outgoingTransfer.BeneficiaryId = beneficiary?.Id;
+
+            outgoingTransfer.TreasuryId = treasury.Id;
 
             var createdOutgoingTransfer = await _outgoingTransferManager.CreateAsync(outgoingTransfer);
             return ObjectMapper.Map<OutgoingTransferDto>(createdOutgoingTransfer);

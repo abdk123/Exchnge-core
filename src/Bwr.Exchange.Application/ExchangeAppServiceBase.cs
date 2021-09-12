@@ -6,6 +6,7 @@ using Abp.IdentityFramework;
 using Abp.Runtime.Session;
 using Bwr.Exchange.Authorization.Users;
 using Bwr.Exchange.MultiTenancy;
+using Bwr.Exchange.Settings.Treasuries.Services;
 
 namespace Bwr.Exchange
 {

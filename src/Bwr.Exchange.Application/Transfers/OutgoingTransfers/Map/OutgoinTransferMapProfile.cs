@@ -7,11 +7,11 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Map
     {
         public OutgoinTransferMapProfile()
         {
-            CreateMap<OutgoingTransfer, OutgoingTransferDto>()
-            .ForMember(x => x.Sender, m => m.Ignore())
-            .ForMember(x => x.Beneficiary, m => m.Ignore());
+            CreateMap<OutgoingTransfer, OutgoingTransferDto>();
 
-            CreateMap<OutgoingTransferDto, OutgoingTransfer>();
+            CreateMap<OutgoingTransferDto, OutgoingTransfer>()
+                .ForMember(x => x.Sender, m => m.Ignore())
+                .ForMember(x => x.Beneficiary, m => m.Ignore());
         }
     }
 }
