@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Repositories;
+using Bwr.Exchange.Settings.Companies.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,15 @@ namespace Bwr.Exchange.CashFlows.CompanyCashFlows.Services
     public class CompanyCashFlowManager : ICompanyCashFlowManager
     {
         private readonly IRepository<CompanyCashFlow> _companyCashFlowRepository;
+        private readonly ICompanyManager _companyManager;
 
-        public CompanyCashFlowManager(IRepository<CompanyCashFlow> companyCashFlowRepository)
+        public CompanyCashFlowManager(
+            IRepository<CompanyCashFlow> companyCashFlowRepository,
+            ICompanyManager companyManager
+            )
         {
             _companyCashFlowRepository = companyCashFlowRepository;
+            _companyManager = companyManager;
         }
 
         public async Task Create(CompanyCashFlow input)
@@ -54,6 +60,25 @@ namespace Bwr.Exchange.CashFlows.CompanyCashFlows.Services
                 x.Date <= toDate);
 
             return companyCashFlows.ToList();
+        }
+
+        public double GetPreviousBalance(int companyId, int currencyId, DateTime date)
+        {
+            double balance = 0.0;
+            var companyCashFlows = _companyCashFlowRepository
+                .GetAllList(x => x.CompanyId == companyId && x.CurrencyId == currencyId && x.Date < date);
+
+            if (companyCashFlows.Any())
+            {
+                balance = companyCashFlows.OrderByDescending(x => x.Id).FirstOrDefault().CurrentBalance;
+            }
+            else
+            {
+                var companyBalance = _companyManager.GetCompanyBalance(companyId, currencyId);
+                balance = companyBalance != null ? companyBalance.Balance : 0.0;
+            }
+
+            return balance;
         }
     }
 }

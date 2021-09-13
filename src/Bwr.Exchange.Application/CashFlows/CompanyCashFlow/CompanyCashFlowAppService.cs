@@ -61,8 +61,26 @@ namespace Bwr.Exchange.CashFlows.CompanyCashFlows
 
             }
 
-            var companyCashFlows = _companyCashFlowManager.Get(companyId, currencyId, fromDate, toDate);
-            IEnumerable<CompanyCashFlowDto> data = ObjectMapper.Map<List<CompanyCashFlowDto>>(companyCashFlows);
+            var companyCashFlowsDto = new List<CompanyCashFlowDto>();
+            if (companyId != 0 && currencyId != 0)
+            {
+                //Add Previous Balance
+                var previousBalance = _companyCashFlowManager.GetPreviousBalance(companyId, currencyId, fromDate);
+                companyCashFlowsDto.Add(new CompanyCashFlowDto
+                {
+                    CompanyId = companyId,
+                    CurrencyId = currencyId,
+                    CurrentBalance = previousBalance,
+                    Type = TransactionConst.PreviousBalance
+                });
+
+                //Get Company Cash Flows
+                var companyCashFlows = _companyCashFlowManager.Get(companyId, currencyId, fromDate, toDate);
+                companyCashFlowsDto.AddRange(ObjectMapper.Map<List<CompanyCashFlowDto>>(companyCashFlows));
+            }
+
+
+            IEnumerable<CompanyCashFlowDto> data = companyCashFlowsDto;
 
             var operations = new DataOperations();
 

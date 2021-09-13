@@ -11,5 +11,6 @@ namespace Bwr.Exchange.CashFlows.CompanyCashFlows.Services
         Task<CompanyCashFlow> GetLastAsync(int companyId, int currencyId);
         IList<CompanyCashFlow> Get(int company);
         IList<CompanyCashFlow> Get(int companyId, int currencyId, DateTime fromDate, DateTime toDate);
+        double GetPreviousBalance(int companyId, int currencyId, DateTime date);
     }
 }

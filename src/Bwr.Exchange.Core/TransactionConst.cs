@@ -13,5 +13,6 @@
         public const string TransferToHim = "حوالة له";
         public const string TransferFromHim = "حوالة منه";
         public const string CashTransfer = "حوالة نقدية";
+        public const string PreviousBalance = "رصيد سابق";
     }
 }

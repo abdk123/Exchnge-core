@@ -60,6 +60,25 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows.Services
             }
             return clientCashFlow;
         }
+
+        public double GetPreviousBalance(int clientId, int currencyId, DateTime date)
+        {
+            double balance = 0.0;
+            var clientCashFlows = _clientCashFlowRepository
+                .GetAllList(x => x.ClientId == clientId && x.CurrencyId == currencyId && x.Date < date);
+
+            if (clientCashFlows.Any())
+            {
+                balance = clientCashFlows.OrderByDescending(x => x.Id).FirstOrDefault().CurrentBalance;
+            }
+            else
+            {
+                var clientBalance = _clientManager.GetClientBalance(clientId, currencyId);
+                balance = clientBalance != null ? clientBalance.Balance : 0.0;
+            }
+
+            return balance;
+        }
     }
 
 

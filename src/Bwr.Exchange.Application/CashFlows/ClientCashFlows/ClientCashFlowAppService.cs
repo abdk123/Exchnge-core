@@ -62,9 +62,26 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows
 
             }
 
-            var clientCashFlows = _clientCashFlowManager.Get(clientId, currencyId, fromDate, toDate);
-            IEnumerable<ClientCashFlowDto> data = ObjectMapper.Map<List<ClientCashFlowDto>>(clientCashFlows);
+            var clientCashFlowsDto = new List<ClientCashFlowDto>();
+            if(clientId != 0 && currencyId != 0)
+            {
+                //Add Previous Balance
+                var previousBalance = _clientCashFlowManager.GetPreviousBalance(clientId, currencyId, fromDate);
+                clientCashFlowsDto.Add(new ClientCashFlowDto
+                {
+                    ClientId = clientId,
+                    CurrencyId = currencyId,
+                    CurrentBalance = previousBalance,
+                    Type = TransactionConst.PreviousBalance
+                });
 
+                //Get Client Cash Flows
+                var clientCashFlows = _clientCashFlowManager.Get(clientId, currencyId, fromDate, toDate);
+                clientCashFlowsDto.AddRange(ObjectMapper.Map<List<ClientCashFlowDto>>(clientCashFlows));
+            }
+            
+
+            IEnumerable<ClientCashFlowDto> data = clientCashFlowsDto;
             var operations = new DataOperations();
 
             IEnumerable groupDs = new List<ClientCashFlowDto>();
@@ -85,7 +102,7 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows
                 data = operations.PerformTake(data, dm.Take);
             }
             
-            return new ReadGrudDto() { result = data, count = 0, groupDs = groupDs };
+            return new ReadGrudDto() { result = data, count = count, groupDs = groupDs };
         }
 
         private WhereFilter GetWhereFilter(List<WhereFilter> filterOptions, string name)

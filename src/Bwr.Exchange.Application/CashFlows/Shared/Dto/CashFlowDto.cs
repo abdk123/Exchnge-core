@@ -6,7 +6,7 @@ namespace Bwr.Exchange.CashFlows.Shared.Dto
 {
     public class CashFlowDto : EntityDto
     {
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public double Amount { get; set; }
         public double CurrentBalance { get; set; }
         public int TransactionId { get; set; }
