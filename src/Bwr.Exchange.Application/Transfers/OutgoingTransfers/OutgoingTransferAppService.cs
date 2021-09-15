@@ -42,6 +42,12 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers
             return ObjectMapper.Map<OutgoingTransferDto>(createdOutgoingTransfer);
         }
 
+        public OutgoingTransferDto GetById(int id)
+        {
+            var outgoingTransfer = _outgoingTransferManager.GetById(id);
+            return ObjectMapper.Map<OutgoingTransferDto>(outgoingTransfer);
+        }
+
         private async Task<Customer> CreateOrUpdateCustomer(CustomerDto customerDto)
         {
             var customer = ObjectMapper.Map<Customer>(customerDto);

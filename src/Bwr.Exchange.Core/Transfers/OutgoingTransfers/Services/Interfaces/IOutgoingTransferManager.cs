@@ -7,5 +7,6 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
     {
         Task<OutgoingTransfer> CreateAsync(OutgoingTransfer input);
         Task<OutgoingTransfer> GetByIdAsync(int id);
+        OutgoingTransfer GetById(int id);
     }
 }

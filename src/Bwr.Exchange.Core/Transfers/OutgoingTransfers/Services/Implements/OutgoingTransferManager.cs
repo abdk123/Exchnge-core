@@ -6,6 +6,7 @@ using Bwr.Exchange.CashFlows.ClientCashFlows.Events;
 using Bwr.Exchange.Transfers.OutgoingTransfers.Factories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,5 +53,12 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
             return await _outgoingTransferRepository.FirstOrDefaultAsync(id);
         }
 
+        public OutgoingTransfer GetById(int id)
+        {
+            return _outgoingTransferRepository.GetAllIncluding(
+                b => b.Beneficiary,
+                s => s.Sender
+                ).FirstOrDefault();
+        }
     }
 }
