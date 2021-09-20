@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bwr.Exchange.Core\Bwr.Exchange.Core.csproj" />
+    <ProjectReference Include="..\Bwr.Exchange.Reflection\Bwr.Exchange.Reflection.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Settings\Commisions\" />

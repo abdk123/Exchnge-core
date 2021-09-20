@@ -1,4 +1,6 @@
 ﻿using Abp.Domain.Services;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
@@ -7,6 +9,8 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
     {
         Task<OutgoingTransfer> CreateAsync(OutgoingTransfer input);
         Task<OutgoingTransfer> GetByIdAsync(int id);
+        Task<IList<OutgoingTransfer>> GetAsync(Dictionary<string, object> dic);
+        IList<OutgoingTransfer> Get(Dictionary<string, object> dic);
         OutgoingTransfer GetById(int id);
     }
 }

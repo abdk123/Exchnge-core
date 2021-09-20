@@ -32,6 +32,18 @@ namespace Bwr.Exchange.Settings.Clients
 
             return ObjectMapper.Map<List<ClientDto>>(countries);
         }
+
+        public async Task<ClientBalanceDto> GetBalanceForEdit(ClientBalanceForEditInputDto input)
+        {
+            var outgoingTransfer = await _clientCashFlowManager.GetByTransctionInfo(input.Id, input.TransactionType);
+            return new ClientBalanceDto()
+            {
+                Balance = outgoingTransfer.CurrentBalance,
+                ClientId = outgoingTransfer.ClientId,
+                CurrencyId = outgoingTransfer.CurrencyId
+            };
+        }
+
         [HttpPost]
         public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
         {
@@ -150,6 +162,8 @@ namespace Bwr.Exchange.Settings.Clients
 
             return clientBalanceDto;
         }
+
+        
 
 
 

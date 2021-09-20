@@ -9,7 +9,8 @@ namespace Bwr.Exchange.CashFlows.CompanyCashFlows.Services
     {
         Task Create(CompanyCashFlow input);
         Task<CompanyCashFlow> GetLastAsync(int companyId, int currencyId);
-        IList<CompanyCashFlow> Get(int company);
+        Task<CompanyCashFlow> GetByTransctionInfo(int transactionId, int transactionType);
+        IList<CompanyCashFlow> Get(int companyId);
         IList<CompanyCashFlow> Get(int companyId, int currencyId, DateTime fromDate, DateTime toDate);
         double GetPreviousBalance(int companyId, int currencyId, DateTime date);
     }

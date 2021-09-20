@@ -12,7 +12,7 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows.Services
         private readonly IRepository<ClientCashFlow> _clientCashFlowRepository;
         private readonly IClientManager _clientManager;
         public ClientCashFlowManager(
-            IRepository<ClientCashFlow> clientCashFlowRepository, 
+            IRepository<ClientCashFlow> clientCashFlowRepository,
             IClientManager clientManager
             )
         {
@@ -41,12 +41,20 @@ namespace Bwr.Exchange.CashFlows.ClientCashFlows.Services
                 cu => cu.Currency,
                 tr => tr.Client)
                 .Where(x =>
-                x.ClientId == clientId && 
-                x.CurrencyId == currencyId && 
-                x.Date >= fromDate && 
+                x.ClientId == clientId &&
+                x.CurrencyId == currencyId &&
+                x.Date >= fromDate &&
                 x.Date <= toDate);
 
             return clientCashFlows.ToList();
+        }
+
+        public async Task<ClientCashFlow> GetByTransctionInfo(int transactionId, int transactionType)
+        {
+            return await _clientCashFlowRepository.FirstOrDefaultAsync(x =>
+                x.TransactionId == transactionId &&
+                x.TransactionType == (TransactionType)transactionType
+            );
         }
 
         public async Task<ClientCashFlow> GetLastAsync(int clientId, int currencyId)

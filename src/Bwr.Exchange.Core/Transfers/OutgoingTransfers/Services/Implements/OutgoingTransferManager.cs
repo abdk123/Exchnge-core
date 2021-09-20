@@ -1,13 +1,10 @@
 ﻿using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Events.Bus;
-using Bwr.Exchange.CashFlows;
-using Bwr.Exchange.CashFlows.ClientCashFlows.Events;
 using Bwr.Exchange.Transfers.OutgoingTransfers.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
@@ -59,6 +56,35 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
                 b => b.Beneficiary,
                 s => s.Sender
                 ).FirstOrDefault();
+        }
+
+        public async Task<IList<OutgoingTransfer>> GetAsync(Dictionary<string, object> dic)
+        {
+            IEnumerable<OutgoingTransfer> outgoingTransfers = await _outgoingTransferRepository.GetAllListAsync(x =>
+              x.Date >= DateTime.Parse(dic["FromDate"].ToString()) &&
+              x.Date >= DateTime.Parse(dic["ToDate"].ToString()));
+             
+            if(outgoingTransfers != null && outgoingTransfers.Any())
+            {
+                if(dic["PaymentType"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers
+                        .Where(x=>x.PaymentType == (PaymentType) int.Parse(dic["PaymantType"].ToString()));
+                }
+
+                if (dic["ClientId"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers
+                        .Where(x => x.FromClientId == int.Parse(dic["ClientId"].ToString()));
+                }
+            }
+
+            return outgoingTransfers.ToList();
+        }
+
+        public IList<OutgoingTransfer> Get(Dictionary<string, object> dic)
+        {
+            throw new NotImplementedException();
         }
     }
 }

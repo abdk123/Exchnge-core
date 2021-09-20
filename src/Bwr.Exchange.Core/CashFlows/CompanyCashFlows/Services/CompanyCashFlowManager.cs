@@ -80,5 +80,13 @@ namespace Bwr.Exchange.CashFlows.CompanyCashFlows.Services
 
             return balance;
         }
+
+        public async Task<CompanyCashFlow> GetByTransctionInfo(int transactionId, int transactionType)
+        {
+            return await _companyCashFlowRepository.FirstOrDefaultAsync(x =>
+                x.TransactionId == transactionId &&
+                x.TransactionType == (TransactionType)transactionType
+            );
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Abp.UI;
 using Bwr.Exchange.CashFlows.CompanyCashFlows.Services;
 using Bwr.Exchange.Settings.Companies.Dto;
+using Bwr.Exchange.Settings.Companies.Dto.CompanyBalance;
 using Bwr.Exchange.Settings.Companies.Dto.CompanyBalances;
 using Bwr.Exchange.Settings.Companies.Services;
 using Bwr.Exchange.Shared.Dto;
@@ -32,6 +33,18 @@ namespace Bwr.Exchange.Settings.Companies
 
             return ObjectMapper.Map<List<CompanyDto>>(companies);
         }
+
+        public async Task<CompanyBalanceDto> GetBalanceForEdit(CompanyBalanceForEditInputDto input)
+        {
+            var outgoingTransfer = await _companyCashFlowManager.GetByTransctionInfo(input.Id, input.TransactionType);
+            return new CompanyBalanceDto()
+            {
+                Balance = outgoingTransfer.CurrentBalance,
+                CompanyId = outgoingTransfer.CompanyId,
+                CurrencyId = outgoingTransfer.CurrencyId
+            };
+        }
+
         [HttpPost]
         public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
         {
@@ -150,6 +163,8 @@ namespace Bwr.Exchange.Settings.Companies
 
             return companyBalanceDto;
         }
+
+        
 
         #endregion
     }
