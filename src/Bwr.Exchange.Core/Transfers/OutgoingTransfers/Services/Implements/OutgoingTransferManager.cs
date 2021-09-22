@@ -84,7 +84,63 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
 
         public IList<OutgoingTransfer> Get(Dictionary<string, object> dic)
         {
-            throw new NotImplementedException();
+            IQueryable<OutgoingTransfer> outgoingTransfers = _outgoingTransferRepository
+                .GetAllIncluding(
+                tc => tc.ToCompany,
+                co => co.Country,
+                cu => cu.Currency,
+                be => be.Beneficiary,
+                se => se.Sender
+                ).Where(x =>
+              x.Date >= DateTime.Parse(dic["FromDate"].ToString()) &&
+              x.Date >= DateTime.Parse(dic["ToDate"].ToString()));
+
+            if (outgoingTransfers != null && outgoingTransfers.Any())
+            {
+                if (dic["PaymentType"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers
+                        .Where(x => x.PaymentType == (PaymentType)int.Parse(dic["PaymantType"].ToString()));
+                }
+
+                if (dic["ClientId"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers
+                        .Where(x => x.FromClientId == int.Parse(dic["ClientId"].ToString()));
+                }
+
+                if (dic["CompanyId"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers
+                        .Where(x => x.FromCompanyId == int.Parse(dic["CompanyId"].ToString()));
+                }
+
+                if (dic["CountryId"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers
+                        .Where(x => x.CountryId == int.Parse(dic["CountryId"].ToString()));
+                }
+
+                if (dic["Beneficiary"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers
+                        .Where(x => x.Beneficiary != null && x.Beneficiary.Name.Contains(dic["Beneficiary"].ToString()));
+                }
+
+                if (dic["BeneficiaryAddress"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers
+                        .Where(x => x.Beneficiary != null && x.Beneficiary.Address.Contains(dic["BeneficiaryAddress"].ToString()));
+                }
+
+                if (dic["Sender"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers
+                        .Where(x => x.Sender != null && x.Sender.Name.Contains(dic["Sender"].ToString()));
+                }
+            }
+
+            return outgoingTransfers.ToList();
         }
     }
 }
