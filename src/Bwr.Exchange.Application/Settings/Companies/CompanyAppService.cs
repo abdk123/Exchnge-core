@@ -82,6 +82,31 @@ namespace Bwr.Exchange.Settings.Companies
 
             return new ReadGrudDto() { result = companies, count = count, groupDs = groupDs };
         }
+
+        public async Task<CompanyBalanceDto> GetCurrentBalance(CompanyBalanceInputDto input)
+        {
+            var companyBalanceDto = new CompanyBalanceDto()
+            {
+                CompanyId = input.CompanyId,
+                CurrencyId = input.CurrencyId
+            };
+            var previousCompanyBalance = await _companyCashFlowManager.GetLastAsync(input.CompanyId, input.CurrencyId);
+            if (previousCompanyBalance != null)
+            {
+                companyBalanceDto.Balance = previousCompanyBalance.CurrentBalance;
+            }
+            else
+            {
+                var companyBalance = _companyManager.GetCompanyBalance(input.CompanyId, input.CurrencyId);
+                if (companyBalance != null)
+                {
+                    companyBalanceDto.Balance = companyBalance.Balance;
+                }
+            }
+
+            return companyBalanceDto;
+        }
+
         public UpdateCompanyDto GetForEdit(int id)
         {
             var company =  _companyManager.GetByIdWithDetail(id);
@@ -140,30 +165,7 @@ namespace Bwr.Exchange.Settings.Companies
                 throw new UserFriendlyException(validationResultMessage);
         }
 
-        public async Task<CompanyBalanceDto> GetCurrentBalance(CompanyBalanceInputDto input)
-        {
-            var companyBalanceDto = new CompanyBalanceDto()
-            {
-                CompanyId = input.CompanyId,
-                CurrencyId = input.CurrencyId
-            };
-            var previousCompanyBalance = await _companyCashFlowManager.GetLastAsync(input.CompanyId, input.CurrencyId);
-            if (previousCompanyBalance != null)
-            {
-                companyBalanceDto.Balance = previousCompanyBalance.CurrentBalance;
-            }
-            else
-            {
-                var companyBalance = _companyManager.GetCompanyBalance(input.CompanyId, input.CurrencyId);
-                if (companyBalance != null)
-                {
-                    companyBalanceDto.Balance = companyBalance.Balance;
-                }
-            }
-
-            return companyBalanceDto;
-        }
-
+        
         
 
         #endregion

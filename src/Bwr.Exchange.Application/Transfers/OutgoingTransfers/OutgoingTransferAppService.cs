@@ -62,6 +62,7 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers
             return ObjectMapper.Map<OutgoingTransferDto>(outgoingTransfer);
         }
 
+        [HttpPost]
         public ReadGrudDto GetForGrid([FromBody] DataManagerRequest dm)
         {
             var input = new SearchOutgoingTransferInputDto();
@@ -71,7 +72,11 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers
                 var fromDateFilter = GetWhereFilter(dm.Where, "fromDate");
                 if (fromDateFilter != null)
                 {
-                    input.FromDate = fromDateFilter.value.ToString();
+                    DateTime fromDate;
+                    DateTime.TryParse(fromDateFilter.value.ToString(), out fromDate);
+                    fromDate = new DateTime(fromDate.Year, fromDate.Month, fromDate.Day, 12, 0, 0);
+
+                    input.FromDate = fromDate.Date.ToString();
                 }
 
                 var toDateFilter = GetWhereFilter(dm.Where, "toDate");
@@ -129,10 +134,10 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers
             var dic = input.ToDictionary();
             var outgoinTransfers = _outgoingTransferManager.Get(dic);
 
-            IEnumerable<OutgoingTransferDto> data = ObjectMapper.Map<List<OutgoingTransferDto>>(outgoinTransfers);
+            IEnumerable<ReadOutgoingTransferDto> data = ObjectMapper.Map<List<ReadOutgoingTransferDto>>(outgoinTransfers);
             var operations = new DataOperations();
 
-            IEnumerable groupDs = new List<OutgoingTransferDto>();
+            IEnumerable groupDs = new List<ReadOutgoingTransferDto>();
             if (dm.Group != null)
             {
                 groupDs = operations.PerformSelect(data, dm.Group);
@@ -167,7 +172,8 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers
 
             foreach (var option in filterOptions)
             {
-                return GetWhereFilter(option.predicates, name);
+                if(option.predicates != null)
+                    return GetWhereFilter(option.predicates, name);
             }
 
             return null;

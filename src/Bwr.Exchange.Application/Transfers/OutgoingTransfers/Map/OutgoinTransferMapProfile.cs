@@ -12,6 +12,8 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Map
             CreateMap<OutgoingTransferDto, OutgoingTransfer>()
                 .ForMember(x => x.Sender, m => m.Ignore())
                 .ForMember(x => x.Beneficiary, m => m.Ignore());
+
+            CreateMap<OutgoingTransfer, ReadOutgoingTransferDto>();
         }
     }
 }

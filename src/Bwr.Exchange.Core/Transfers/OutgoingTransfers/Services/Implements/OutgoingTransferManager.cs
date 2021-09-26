@@ -63,13 +63,13 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
             IEnumerable<OutgoingTransfer> outgoingTransfers = await _outgoingTransferRepository.GetAllListAsync(x =>
               x.Date >= DateTime.Parse(dic["FromDate"].ToString()) &&
               x.Date >= DateTime.Parse(dic["ToDate"].ToString()));
-             
-            if(outgoingTransfers != null && outgoingTransfers.Any())
+
+            if (outgoingTransfers != null && outgoingTransfers.Any())
             {
-                if(dic["PaymentType"] != null)
+                if (dic["PaymentType"] != null)
                 {
                     outgoingTransfers = outgoingTransfers
-                        .Where(x=>x.PaymentType == (PaymentType) int.Parse(dic["PaymantType"].ToString()));
+                        .Where(x => x.PaymentType == (PaymentType)int.Parse(dic["PaymantType"].ToString()));
                 }
 
                 if (dic["ClientId"] != null)
@@ -84,19 +84,16 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
 
         public IList<OutgoingTransfer> Get(Dictionary<string, object> dic)
         {
-            IQueryable<OutgoingTransfer> outgoingTransfers = _outgoingTransferRepository
-                .GetAllIncluding(
-                tc => tc.ToCompany,
-                co => co.Country,
-                cu => cu.Currency,
-                be => be.Beneficiary,
-                se => se.Sender
-                ).Where(x =>
-              x.Date >= DateTime.Parse(dic["FromDate"].ToString()) &&
-              x.Date >= DateTime.Parse(dic["ToDate"].ToString()));
+            IEnumerable<OutgoingTransfer> outgoingTransfers = GetAllWithDetails();
 
             if (outgoingTransfers != null && outgoingTransfers.Any())
             {
+                if (dic["FromDate"] != null && dic["FromDate"] != null)
+                {
+                    outgoingTransfers = outgoingTransfers.Where(x =>
+                      x.Date >= DateTime.Parse(dic["FromDate"].ToString()) &&
+                      x.Date <= DateTime.Parse(dic["ToDate"].ToString())).ToList();
+                }
                 if (dic["PaymentType"] != null)
                 {
                     outgoingTransfers = outgoingTransfers
@@ -138,9 +135,23 @@ namespace Bwr.Exchange.Transfers.OutgoingTransfers.Services
                     outgoingTransfers = outgoingTransfers
                         .Where(x => x.Sender != null && x.Sender.Name.Contains(dic["Sender"].ToString()));
                 }
+
+                return outgoingTransfers.ToList();
             }
 
-            return outgoingTransfers.ToList();
+            return new List<OutgoingTransfer>();
+        }
+
+        IQueryable<OutgoingTransfer> GetAllWithDetails()
+        {
+            return _outgoingTransferRepository
+                .GetAllIncluding(
+                tc => tc.ToCompany,
+                co => co.Country,
+                cu => cu.Currency,
+                be => be.Beneficiary,
+                se => se.Sender
+                );
         }
     }
 }

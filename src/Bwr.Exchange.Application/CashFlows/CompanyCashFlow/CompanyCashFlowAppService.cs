@@ -50,6 +50,7 @@ namespace Bwr.Exchange.CashFlows.CompanyCashFlows
                 if (fromDateFilter != null)
                 {
                     DateTime.TryParse(fromDateFilter.value.ToString(), out fromDate);
+                    fromDate = new DateTime(fromDate.Year, fromDate.Month, fromDate.Day, 12, 0, 0);
                 }
 
                 var toDateFilter = GetWhereFilter(dm.Where, "toDate");

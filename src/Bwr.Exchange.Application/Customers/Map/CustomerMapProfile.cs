@@ -9,6 +9,8 @@ namespace Bwr.Exchange.Customers.Map
         {
             CreateMap<Customer, CustomerDto>();
             CreateMap<CustomerDto, Customer>();
+
+            CreateMap<Customer, ReadCustomerDto>();
         }
     }
 }

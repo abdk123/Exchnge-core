@@ -274,5 +274,11 @@
     <text name="CompanyBalanceStatement">كشف رصيد الشركة</text>
     <text name="TreasuryBalanceStatement">كشف رصيد الصندوق</text>
     <text name="YouMustCreateTreasuryFirst">يجب تعريف الصندوق الرئيسي أولاً</text>
+
+    <text name="FromDate">من تاريخ</text>
+    <text name="ToDate">إلى تاريخ</text>
+    <text name="From-Company-Client"> من عميل/شركة </text>
+    
+    
   </texts>
 </localizationDictionary>
